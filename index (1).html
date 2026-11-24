@@ -1,0 +1,1071 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Jalur Belajar SKD CPNS</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..800&family=Hanken+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  /* Ide tata letak: kertas ujian dingin, kartu putih, dan tiga warna subtes (TWK merah, TIU biru, TKP hijau) yang konsisten di setiap bagian. */
+  --bg:#F1F4F9; --surface:#FFFFFF; --surface-2:#E7ECF4; --ink:#13203B; --ink-2:#4B5876; --line:#D3DBE8;
+  --twk:#B3362D; --twk-soft:#F9E5E2;
+  --tiu:#2459A6; --tiu-soft:#E1EBF9;
+  --tkp:#16795F; --tkp-soft:#DBF1EA;
+  --mix:#575E8F; --mix-soft:#E8E9F4;
+  --good:#16795F; --bad:#B3362D; --warn:#9A6700;
+  --shadow:0 1px 2px rgba(19,32,59,.06),0 8px 24px rgba(19,32,59,.06);
+  --f-display:'Bricolage Grotesque','Segoe UI',system-ui,sans-serif;
+  --f-body:'Hanken Grotesk','Segoe UI',system-ui,sans-serif;
+  --f-mono:'IBM Plex Mono',ui-monospace,Menlo,Consolas,monospace;
+  --r:14px;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    color-scheme:dark;
+    --bg:#0D1322; --surface:#161E33; --surface-2:#1F2944; --ink:#E8ECF6; --ink-2:#A2ADC6; --line:#2C3757;
+    --twk:#F28B82; --twk-soft:#3A2023;
+    --tiu:#82ADF3; --tiu-soft:#1B2B4C;
+    --tkp:#55C7AA; --tkp-soft:#153538;
+    --mix:#A3A9E0; --mix-soft:#25294A;
+    --good:#55C7AA; --bad:#F28B82; --warn:#E3B04B;
+    --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 24px rgba(0,0,0,.25);
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --bg:#0D1322; --surface:#161E33; --surface-2:#1F2944; --ink:#E8ECF6; --ink-2:#A2ADC6; --line:#2C3757;
+  --twk:#F28B82; --twk-soft:#3A2023;
+  --tiu:#82ADF3; --tiu-soft:#1B2B4C;
+  --tkp:#55C7AA; --tkp-soft:#153538;
+  --mix:#A3A9E0; --mix-soft:#25294A;
+  --good:#55C7AA; --bad:#F28B82; --warn:#E3B04B;
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 24px rgba(0,0,0,.25);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:116px}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 16px/1.6 var(--f-body);-webkit-font-smoothing:antialiased}
+h1,h2,h3,h4{font-family:var(--f-display);line-height:1.15;margin:0;text-wrap:balance;letter-spacing:-.01em}
+p{margin:0}
+a{color:inherit}
+button,input,select{font:inherit;color:inherit}
+button{cursor:pointer}
+:focus-visible{outline:3px solid var(--tiu);outline-offset:2px;border-radius:6px}
+.wrap{max-width:1120px;margin:0 auto;padding:0 20px}
+.skip{position:absolute;left:-999px;top:8px;background:var(--ink);color:var(--bg);padding:8px 12px;border-radius:8px;z-index:100}
+.skip:focus{left:8px}
+[data-sub]{--c:var(--mix);--cs:var(--mix-soft)}
+[data-sub="twk"]{--c:var(--twk);--cs:var(--twk-soft)}
+[data-sub="tiu"]{--c:var(--tiu);--cs:var(--tiu-soft)}
+[data-sub="tkp"]{--c:var(--tkp);--cs:var(--tkp-soft)}
+.mono{font-family:var(--f-mono);font-variant-numeric:tabular-nums}
+
+/* header */
+.top{position:sticky;top:0;z-index:50;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.top-in{display:flex;align-items:center;justify-content:space-between;gap:12px;padding-top:10px;padding-bottom:10px}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;font:700 19px var(--f-display)}
+.brand svg{display:block}
+.who{display:flex;background:var(--surface-2);border-radius:999px;padding:3px;gap:2px}
+.who button{border:0;background:transparent;padding:6px 14px;border-radius:999px;font-weight:600;font-size:14px;color:var(--ink-2)}
+.who button[aria-pressed="true"]{background:var(--ink);color:var(--bg)}
+.nav{display:flex;gap:4px;overflow-x:auto;padding-bottom:8px;scrollbar-width:none}
+.nav::-webkit-scrollbar{display:none}
+.nav a{white-space:nowrap;text-decoration:none;font-size:14px;font-weight:600;color:var(--ink-2);padding:5px 12px;border-radius:999px}
+.nav a:hover{background:var(--surface-2)}
+.nav a[aria-current="true"]{background:var(--surface);color:var(--ink);box-shadow:inset 0 0 0 1px var(--line)}
+
+/* generic */
+.sec{padding:60px 0 8px}
+.eyebrow{font:600 13px var(--f-mono);text-transform:uppercase;letter-spacing:.08em;color:var(--ink-2);margin-bottom:10px}
+.sec h2{font-size:clamp(28px,4vw,40px);font-weight:700;max-width:22ch}
+.lead{color:var(--ink-2);max-width:62ch;margin-top:12px;font-size:17px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:20px;box-shadow:var(--shadow)}
+.grid{display:grid;gap:16px}
+.g2{grid-template-columns:repeat(2,minmax(0,1fr))}
+.g3{grid-template-columns:repeat(3,minmax(0,1fr))}
+.g4{grid-template-columns:repeat(4,minmax(0,1fr))}
+.mt{margin-top:28px}.mt-s{margin-top:14px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:1px solid var(--ink);background:var(--ink);color:var(--bg);padding:10px 18px;border-radius:999px;font-weight:700;text-decoration:none;font-size:15px;transition:transform .15s,opacity .15s}
+.btn:hover{transform:translateY(-1px)}
+.btn.ghost{background:transparent;color:var(--ink)}
+.btn.sm{padding:6px 12px;font-size:13px}
+.btn[disabled]{opacity:.45;cursor:not-allowed;transform:none}
+.pill{display:inline-flex;align-items:center;gap:6px;font:600 12px var(--f-mono);padding:3px 10px;border-radius:999px;background:var(--cs);color:var(--c)}
+.dot{width:10px;height:10px;border-radius:50%;background:var(--c);display:inline-block;flex:none}
+.bar{display:flex;height:12px;border-radius:999px;overflow:hidden;background:var(--surface-2);gap:2px}
+.bar i{display:block;height:100%;background:var(--c)}
+.note{font-size:14px;color:var(--ink-2)}
+.muted{color:var(--ink-2)}
+table{border-collapse:collapse;width:100%;font-size:15px}
+th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font:600 12px var(--f-mono);text-transform:uppercase;letter-spacing:.06em;color:var(--ink-2)}
+.scroll-x{overflow-x:auto}
+.field{display:flex;flex-direction:column;gap:6px;font-size:14px;font-weight:600}
+.field input,.field select{background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:9px 12px;font-weight:500;min-width:0}
+.field input[type=range]{padding:0;accent-color:var(--ink)}
+
+/* hero */
+.hero{padding:44px 0 10px}
+.hero-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:28px;align-items:start}
+.hero h1{font-size:clamp(38px,6vw,64px);font-weight:800;letter-spacing:-.025em;max-width:14ch}
+.hero h1 em{font-style:normal;background:linear-gradient(transparent 62%,var(--tiu-soft) 62%)}
+.hero .lead{font-size:18px}
+.cta{display:flex;flex-wrap:wrap;gap:10px;margin-top:24px}
+.anat{padding:22px}
+.anat h3{font-size:18px}
+.anat-bar{display:flex;gap:3px;height:54px;margin:16px 0 8px}
+.anat-bar div{background:var(--c);color:#fff;border-radius:8px;display:flex;flex-direction:column;justify-content:center;padding:0 10px;min-width:0}
+.anat-bar b{font:600 15px var(--f-mono)}
+.anat-bar span{font-size:11px;opacity:.9}
+[data-theme="dark"] .anat-bar div,:root:not([data-theme="light"]) .anat-bar div{color:#0D1322}
+@media (prefers-color-scheme:light){:root:not([data-theme="dark"]) .anat-bar div{color:#fff}}
+.anat-meta{display:flex;justify-content:space-between;font:500 12px var(--f-mono);color:var(--ink-2)}
+.cd-box{display:flex;align-items:center;gap:18px;border-top:1px dashed var(--line);margin-top:18px;padding-top:18px}
+.cd{display:flex;flex-direction:column;align-items:flex-start;min-width:96px}
+.cd b{font:600 52px/1 var(--f-mono);letter-spacing:-.03em}
+.cd span{font-size:13px;color:var(--ink-2)}
+.cd-box .field{flex:1}
+
+/* skd anatomy */
+.sub-card{border-top:6px solid var(--c)}
+.sub-card h3{font-size:24px;margin:8px 0 2px}
+.sub-card .kv{display:grid;grid-template-columns:auto 1fr;gap:4px 14px;margin:14px 0;font-size:15px}
+.sub-card .kv dt{color:var(--ink-2)}.sub-card .kv dd{margin:0;font-weight:600}
+.sub-card ul{margin:0;padding-left:18px;color:var(--ink-2);font-size:15px}
+.timeline{display:flex;gap:3px;margin-top:14px}
+.timeline div{background:var(--c);color:#fff;border-radius:8px;padding:10px;min-width:0}
+[data-theme="dark"] .timeline div,:root:not([data-theme="light"]) .timeline div{color:#0D1322}
+@media (prefers-color-scheme:light){:root:not([data-theme="dark"]) .timeline div{color:#fff}}
+.timeline b{display:block;font:600 18px var(--f-mono)}
+.timeline span{font-size:12px}
+
+/* dashboard */
+.tile{display:flex;flex-direction:column;gap:6px}
+.tile .lab{font:600 12px var(--f-mono);text-transform:uppercase;letter-spacing:.06em;color:var(--ink-2)}
+.tile .val{font:700 34px/1 var(--f-display)}
+.tile .val small{font:500 14px var(--f-body);color:var(--ink-2)}
+.meter{height:8px;background:var(--surface-2);border-radius:999px;overflow:hidden}
+.meter i{display:block;height:100%;background:var(--c,var(--ink));border-radius:999px;transition:width .4s}
+.journey{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.step{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:14px 16px;border-bottom:5px solid var(--c)}
+.step b{font:700 15px var(--f-display);display:block}
+.step .pct{font:600 26px var(--f-mono)}
+
+/* paket */
+.tabs{display:flex;gap:8px;flex-wrap:wrap}
+.tab{border:1px solid var(--line);background:var(--surface);padding:10px 16px;border-radius:12px;font-weight:700;display:flex;align-items:center;gap:8px}
+.tab[aria-selected="true"]{background:var(--c);border-color:var(--c);color:#fff}
+[data-theme="dark"] .tab[aria-selected="true"],:root:not([data-theme="light"]) .tab[aria-selected="true"]{color:#0D1322}
+@media (prefers-color-scheme:light){:root:not([data-theme="dark"]) .tab[aria-selected="true"]{color:#fff}}
+.tab[aria-selected="true"] .dot{background:currentColor}
+.panel{margin-top:16px;display:grid;grid-template-columns:1.1fr .9fr;gap:16px}
+.panel-head{grid-column:1/-1;background:var(--cs);border:1px solid var(--line);border-left:8px solid var(--c);border-radius:var(--r);padding:20px 22px;display:flex;flex-wrap:wrap;gap:16px;justify-content:space-between;align-items:center}
+.panel-head h3{font-size:clamp(22px,3vw,30px)}
+.facts{display:flex;gap:22px;flex-wrap:wrap}
+.facts div{display:flex;flex-direction:column}
+.facts b{font:600 22px var(--f-mono)}
+.facts span{font-size:12px;color:var(--ink-2)}
+.topic{display:flex;gap:12px;padding:12px 0;border-bottom:1px solid var(--line);align-items:flex-start}
+.topic:last-child{border:0}
+.topic input{width:20px;height:20px;margin-top:3px;accent-color:var(--c);flex:none}
+.topic label{cursor:pointer;display:block}
+.topic b{display:block}
+.topic span{font-size:14px;color:var(--ink-2)}
+.topic input:checked+label b{text-decoration:line-through;text-decoration-color:var(--c);color:var(--ink-2)}
+.hr-title{display:flex;justify-content:space-between;align-items:baseline;gap:10px;margin-bottom:6px}
+.hr-title h4{font-size:18px}
+.split{display:flex;height:34px;border-radius:10px;overflow:hidden;gap:2px;margin:10px 0 6px}
+.split div{background:var(--c);color:#fff;font:600 12px/34px var(--f-mono);text-align:center;opacity:.95;min-width:0}
+[data-theme="dark"] .split div,:root:not([data-theme="light"]) .split div{color:#0D1322}
+@media (prefers-color-scheme:light){:root:not([data-theme="dark"]) .split div{color:#fff}}
+.tips{margin:8px 0 0;padding-left:20px}
+.tips li{margin:6px 0}
+
+/* jadwal */
+.set-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
+.rate{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:16px}
+.phase-row td:first-child{white-space:nowrap}
+.stack{display:flex;height:14px;border-radius:999px;overflow:hidden;gap:2px;min-width:140px}
+.stack i{display:block}
+.legend{display:flex;gap:14px;flex-wrap:wrap;font-size:13px;color:var(--ink-2)}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.weeks{display:flex;gap:6px;overflow-x:auto;padding:4px 2px 10px}
+.wk{flex:none;border:1px solid var(--line);background:var(--surface);border-radius:12px;padding:8px 12px;text-align:left;min-width:92px;border-top:4px solid var(--c)}
+.wk b{display:block;font:700 14px var(--f-display)}
+.wk span{font-size:12px;color:var(--ink-2)}
+.wk[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.wk[aria-pressed="true"] span{color:inherit;opacity:.8}
+.days{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:10px}
+.day{background:var(--surface);border:1px solid var(--line);border-top:5px solid var(--c);border-radius:12px;padding:12px;display:flex;flex-direction:column;gap:8px}
+.day.today{box-shadow:0 0 0 2px var(--ink)}
+.day.done{background:var(--cs)}
+.day .dn{display:flex;justify-content:space-between;align-items:baseline}
+.day .dn b{font:700 15px var(--f-display)}
+.day .dn span{font:500 12px var(--f-mono);color:var(--ink-2)}
+.day h4{font:600 14px/1.3 var(--f-body);letter-spacing:0}
+.day .mins{font:600 13px var(--f-mono);color:var(--c)}
+.day ul{list-style:none;margin:0;padding:0;font-size:12px;color:var(--ink-2)}
+.day li{display:flex;justify-content:space-between}
+.day .nt{font-size:12px;color:var(--warn)}
+.day label.chk{white-space:nowrap;display:flex;gap:8px;align-items:center;font-size:13px;font-weight:600;margin-top:auto;cursor:pointer}
+.day input{width:18px;height:18px;flex:none;accent-color:var(--c)}
+
+/* materi */
+details.mt-d{background:var(--surface);border:1px solid var(--line);border-radius:12px;margin-top:10px}
+details.mt-d summary{cursor:pointer;padding:14px 18px;font:600 16px var(--f-body);list-style:none;display:flex;gap:10px;align-items:center;justify-content:space-between}
+details.mt-d summary::-webkit-details-marker{display:none}
+details.mt-d summary::after{content:"+";font:600 20px var(--f-mono);color:var(--c)}
+details[open].mt-d summary::after{content:"\2212"}
+details.mt-d .body{padding:0 18px 16px;color:var(--ink-2)}
+details.mt-d ul{margin:0;padding-left:20px}
+details.mt-d li{margin:6px 0}
+details.mt-d li b{color:var(--ink)}
+.fc-wrap{display:grid;grid-template-columns:1fr;gap:12px;max-width:640px}
+.flash{perspective:900px}
+.flash button.face{width:100%;min-height:200px;background:var(--surface);border:1px solid var(--line);border-top:6px solid var(--c);border-radius:var(--r);padding:26px;text-align:left;box-shadow:var(--shadow);display:flex;flex-direction:column;justify-content:center;gap:10px}
+.flash .side{font:600 12px var(--f-mono);text-transform:uppercase;letter-spacing:.08em;color:var(--c)}
+.flash .txt{font:600 clamp(19px,2.6vw,24px)/1.35 var(--f-display)}
+.flash .hint{font-size:13px;color:var(--ink-2)}
+.fc-actions{display:flex;gap:10px;flex-wrap:wrap}
+
+/* latihan */
+.q-card{max-width:760px}
+.q-meta{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;gap:10px;flex-wrap:wrap}
+.q-text{font:600 clamp(18px,2.4vw,22px)/1.4 var(--f-display);margin-bottom:16px}
+.opts{display:grid;gap:10px}
+.opt{display:flex;gap:14px;align-items:flex-start;text-align:left;width:100%;background:var(--bg);border:1.5px solid var(--line);border-radius:12px;padding:12px 14px}
+.opt:hover:not([disabled]){border-color:var(--ink)}
+.bub{flex:none;width:30px;height:30px;border-radius:50%;border:2px solid var(--ink-2);display:grid;place-items:center;font:600 13px var(--f-mono);color:var(--ink-2);transition:all .15s}
+.opt.pick .bub{background:var(--ink);border-color:var(--ink);color:var(--bg)}
+.opt.ok{border-color:var(--good);background:var(--tkp-soft)}
+.opt.ok .bub{background:var(--good);border-color:var(--good);color:#fff}
+.opt.no{border-color:var(--bad);background:var(--twk-soft)}
+.opt.no .bub{background:var(--bad);border-color:var(--bad);color:#fff}
+.opt .sc{margin-left:auto;font:600 13px var(--f-mono);color:var(--ink-2);flex:none}
+.explain{margin-top:14px;padding:14px 16px;border-radius:12px;background:var(--surface-2);font-size:15px}
+.res-big{font:700 56px/1 var(--f-mono);letter-spacing:-.03em}
+.pick-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.pick-grid button{background:var(--surface);border:1px solid var(--line);border-top:5px solid var(--c);border-radius:12px;padding:14px;text-align:left}
+.pick-grid button:hover{box-shadow:var(--shadow)}
+.pick-grid b{display:block;font:700 18px var(--f-display)}
+.pick-grid span{font-size:13px;color:var(--ink-2)}
+
+/* fokus */
+.timer-grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:16px}
+.ring-box{display:flex;flex-direction:column;align-items:center;gap:14px}
+.ring{position:relative;width:220px;height:220px}
+.ring svg{width:100%;height:100%;transform:rotate(-90deg)}
+.ring circle{fill:none;stroke-width:10}
+.ring .bg{stroke:var(--surface-2)}
+.ring .fg{stroke:var(--c);stroke-linecap:round;transition:stroke-dashoffset .3s linear}
+.ring .t{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.ring .t b{font:600 44px var(--f-mono);letter-spacing:-.03em}
+.ring .t span{font-size:13px;color:var(--ink-2)}
+.chips{display:flex;gap:8px;flex-wrap:wrap}
+.chip{border:1px solid var(--line);background:var(--surface);padding:6px 14px;border-radius:999px;font-weight:600;font-size:14px}
+.chip[aria-pressed="true"]{background:var(--c,var(--ink));border-color:var(--c,var(--ink));color:#fff}
+[data-theme="dark"] .chip[aria-pressed="true"],:root:not([data-theme="light"]) .chip[aria-pressed="true"]{color:#0D1322}
+@media (prefers-color-scheme:light){:root:not([data-theme="dark"]) .chip[aria-pressed="true"]{color:#fff}}
+.log-row{display:flex;justify-content:space-between;gap:10px;align-items:center;padding:8px 0;border-bottom:1px solid var(--line);font-size:14px}
+.log-row:last-child{border:0}
+.x{border:0;background:transparent;color:var(--ink-2);font-size:18px;line-height:1;padding:4px 8px;border-radius:6px}
+.x:hover{color:var(--bad)}
+
+/* evaluasi */
+.calc{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;align-items:end}
+.verdict{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:16px}
+.vd{padding:14px;border-radius:12px;background:var(--cs);border:1px solid var(--line)}
+.vd b{font:700 26px var(--f-mono);display:block}
+.vd .st{font:600 13px var(--f-mono)}
+.vd.pass .st{color:var(--good)}.vd.fail .st{color:var(--bad)}
+.charts{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.charts svg{width:100%;height:auto;display:block}
+
+/* faq + footer */
+details.faq{background:var(--surface);border:1px solid var(--line);border-radius:12px;margin-top:10px}
+details.faq summary{cursor:pointer;padding:16px 18px;font-weight:700;list-style:none;display:flex;justify-content:space-between;gap:12px}
+details.faq summary::-webkit-details-marker{display:none}
+details.faq summary::after{content:"+";font:600 20px var(--f-mono)}
+details[open].faq summary::after{content:"\2212"}
+details.faq p{padding:0 18px 16px;color:var(--ink-2)}
+footer{margin-top:72px;border-top:1px solid var(--line);padding:32px 0 56px;color:var(--ink-2);font-size:14px}
+footer a{color:var(--tiu)}
+.toast{position:fixed;left:50%;bottom:22px;transform:translateX(-50%) translateY(20px);background:var(--ink);color:var(--bg);padding:10px 18px;border-radius:999px;font-weight:600;font-size:14px;opacity:0;pointer-events:none;transition:all .3s;z-index:90;max-width:90vw;text-align:center}
+.toast.on{opacity:1;transform:translateX(-50%)}
+
+@media (max-width:980px){
+  .hero-grid,.panel,.timer-grid{grid-template-columns:1fr}
+  .g4,.set-grid,.calc,.pick-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .days{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .journey{grid-template-columns:repeat(2,1fr)}
+}
+@media (max-width:700px){
+  .g3,.g2,.charts,.verdict,.rate{grid-template-columns:1fr}
+  .days{grid-template-columns:1fr}
+  .sec{padding-top:48px}
+  .cd-box{flex-direction:column;align-items:stretch}
+  .brand span.t{display:none}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Lompat ke isi</a>
+<header class="top">
+  <div class="wrap top-in">
+    <a class="brand" href="#atas" aria-label="Jalur SKD, kembali ke atas">
+      <svg width="30" height="30" viewBox="0 0 30 30" aria-hidden="true"><circle cx="9" cy="9" r="6" fill="var(--twk)"/><circle cx="21" cy="9" r="6" fill="var(--tiu)"/><circle cx="15" cy="21" r="6" fill="var(--tkp)"/></svg>
+      <span class="t">Jalur SKD</span>
+    </a>
+    <div class="who" role="group" aria-label="Pilih profil belajar">
+      <button type="button" data-act="profile" data-id="joshua" aria-pressed="true">Joshua</button>
+      <button type="button" data-act="profile" data-id="bagas" aria-pressed="false">Bagas</button>
+    </div>
+  </div>
+  <nav class="wrap nav" aria-label="Bagian halaman">
+    <a href="#skd">Kenali SKD</a><a href="#dasbor">Progres</a><a href="#paket">Paket Belajar</a><a href="#jadwal">Jadwal</a><a href="#materi">Materi</a><a href="#latihan">Latihan</a><a href="#fokus">Ruang Fokus</a><a href="#evaluasi">Tryout</a><a href="#faq">FAQ</a>
+  </nav>
+</header>
+
+<main id="main">
+<section class="hero" id="atas">
+  <div class="wrap hero-grid">
+    <div>
+      <div class="eyebrow">Persiapan CPNS · Seleksi Kompetensi Dasar</div>
+      <h1>Belajar SKD, <em>satu paket</em> pada satu waktu.</h1>
+      <p class="lead">Panduan, jadwal, dan latihan untuk <b>Joshua</b> dan <b>Bagas Wiratama</b>. Tiga paket inti (TWK, TIU, TKP) plus satu paket simulasi, lengkap dengan alokasi waktu yang bisa disesuaikan dengan jam belajar masing-masing.</p>
+      <p class="note mt-s">Sedang belajar sebagai <b id="heroName">Joshua</b>. Ganti profil lewat tombol di pojok kanan atas.</p>
+      <div class="cta">
+        <a class="btn" href="#paket">Lihat paket belajar</a>
+        <a class="btn ghost" href="#jadwal">Atur jadwal</a>
+        <a class="btn ghost" href="#latihan">Coba latihan soal</a>
+      </div>
+    </div>
+    <div class="card anat">
+      <h3>Anatomi ujian SKD</h3>
+      <p class="note">110 soal, 100 menit, berbasis komputer (CAT).</p>
+      <div class="anat-bar" role="img" aria-label="Komposisi soal: TWK 30, TIU 35, TKP 45">
+        <div data-sub="twk" style="flex:30"><b>30</b><span>TWK</span></div>
+        <div data-sub="tiu" style="flex:35"><b>35</b><span>TIU</span></div>
+        <div data-sub="tkp" style="flex:45"><b>45</b><span>TKP</span></div>
+      </div>
+      <div class="anat-meta"><span>Skor maks 550</span><span>Lolos: 65 · 80 · 166</span></div>
+      <div class="cd-box" id="heroCd"></div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="skd">
+  <div class="wrap">
+    <div class="eyebrow">Kenali ujiannya</div>
+    <h2>Tiga subtes, tiga batas lolos.</h2>
+    <p class="lead">Kelulusan SKD ditentukan per subtes. Total skor tinggi tidak menolong bila satu subtes di bawah ambang batas, jadi belajar harus merata.</p>
+    <div class="grid g3 mt" id="skdCards"></div>
+    <div class="card mt">
+      <h3 style="font-size:20px">Bagi 100 menit ujian</h3>
+      <p class="note mt-s">Rata-rata hanya 54 detik per soal. Anggaran waktu berikut dipakai di semua tryout pada situs ini.</p>
+      <div class="timeline" id="timeBudget"></div>
+    </div>
+    <div class="grid g2 mt">
+      <div class="card">
+        <h3 style="font-size:20px">Cara skor dihitung</h3>
+        <ul class="tips">
+          <li><b>TWK dan TIU:</b> benar 5 poin, salah atau kosong 0 poin.</li>
+          <li><b>TKP:</b> setiap pilihan punya skor 1 sampai 5, jadi tidak ada jawaban yang bernilai 0.</li>
+          <li>Tidak ada pengurangan nilai untuk jawaban salah. <b>Jangan kosongkan soal.</b></li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3 style="font-size:20px">Target belajar kami</h3>
+        <p class="note mt-s">Ambang batas adalah lantai, bukan sasaran. Target aman dipasang sekitar 25 poin di atas ambang batas supaya ada ruang bila hari H kurang mulus.</p>
+        <p class="note mt-s">Acuan ambang batas formasi umum: 65 (TWK), 80 (TIU), 166 (TKP). Formasi khusus dan seleksi lain bisa berbeda, misalnya TKP 156 pada seleksi sekolah kedinasan 2026. Cek selalu pengumuman resmi formasi yang dilamar.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="dasbor">
+  <div class="wrap">
+    <div class="eyebrow">Progres <span id="dasName"></span></div>
+    <h2>Seberapa jauh sudah berjalan.</h2>
+    <div class="journey mt" id="journey"></div>
+    <div class="grid g3" id="tiles" style="margin-top:16px"></div>
+  </div>
+</section>
+
+<section class="sec" id="paket">
+  <div class="wrap">
+    <div class="eyebrow">Paket belajar</div>
+    <h2>Empat paket, berurutan.</h2>
+    <p class="lead">Paket 1 sampai 3 membahas satu subtes per paket. Paket 4 menyatukan semuanya dalam simulasi penuh. Durasi tiap paket mengikuti pengaturan di bagian Jadwal.</p>
+    <div class="tabs mt" role="tablist" aria-label="Pilih paket" id="pkgTabs"></div>
+    <div class="panel" id="pkgPanel" role="tabpanel"></div>
+  </div>
+</section>
+
+<section class="sec" id="jadwal">
+  <div class="wrap">
+    <div class="eyebrow">Jadwal dan alokasi waktu</div>
+    <h2>Rencana mingguan yang bisa diatur.</h2>
+    <p class="lead">Atur tanggal mulai, durasi program, dan jam belajar per minggu. Jadwal harian, pembagian waktu per paket, dan hitung mundur ikut menyesuaikan.</p>
+    <div class="card mt" id="jdSettings"></div>
+    <div id="jdOut"></div>
+  </div>
+</section>
+
+<section class="sec" id="materi">
+  <div class="wrap">
+    <div class="eyebrow">Materi inti</div>
+    <h2>Ringkasan untuk dibaca ulang.</h2>
+    <p class="lead">Poin kunci tiap subtes, lalu kartu hafalan untuk menguji ingatan. Ini ringkasan belajar, bukan pengganti buku atau modul lengkap.</p>
+    <div class="tabs mt" role="tablist" aria-label="Pilih subtes materi" id="matTabs"></div>
+    <div id="matBody"></div>
+    <div class="mt">
+      <h3 style="font-size:24px">Kartu hafalan</h3>
+      <p class="note mt-s">Ketuk kartu untuk melihat jawaban. Kartu yang ditandai hafal tidak muncul lagi, kartu yang belum akan kembali di antrean.</p>
+      <div class="chips mt-s" id="deckChips"></div>
+      <div class="fc-wrap mt-s" id="flashArea"></div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="latihan">
+  <div class="wrap">
+    <div class="eyebrow">Latihan soal</div>
+    <h2>Pemanasan dengan pembahasan.</h2>
+    <p class="lead">Soal latihan buatan sendiri dengan format seperti SKD. Jawab, lihat pembahasan, lalu bandingkan proyeksi skor dengan ambang batas. Untuk uji sebenarnya, tetap perbanyak tryout CAT penuh.</p>
+    <div class="mt" id="quizArea"></div>
+  </div>
+</section>
+
+<section class="sec" id="fokus">
+  <div class="wrap">
+    <div class="eyebrow">Ruang fokus</div>
+    <h2>Belajar berjam-jam, tercatat otomatis.</h2>
+    <p class="lead">Pilih subtes, jalankan timer, dan menit belajar masuk ke progres mingguan. Sesi yang selesai langsung dicatat.</p>
+    <div class="timer-grid mt">
+      <div class="card ring-box" id="timerBox" data-sub="twk"></div>
+      <div class="card" id="logBox"></div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="evaluasi">
+  <div class="wrap">
+    <div class="eyebrow">Tryout dan evaluasi</div>
+    <h2>Catat tiap tryout, lihat arahnya.</h2>
+    <p class="lead">Masukkan hasil tryout penuh dari platform mana pun. Situs ini membandingkannya dengan ambang batas dan menggambar grafik perkembangan tiap subtes.</p>
+    <div class="card mt" id="calcBox"></div>
+    <div class="mt" id="chartBox"></div>
+  </div>
+</section>
+
+<section class="sec" id="faq">
+  <div class="wrap">
+    <div class="eyebrow">Pertanyaan umum</div>
+    <h2>Yang sering ditanyakan.</h2>
+    <div class="mt" id="faqList" style="max-width:820px"></div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p><b>Jalur SKD CPNS</b> untuk Joshua dan Bagas Wiratama. Progres tersimpan di browser perangkat masing-masing.</p>
+    <p class="mt-s">Acuan resmi: pengumuman BKN dan Kementerian PANRB melalui <a href="https://sscasn.bkn.go.id" target="_blank" rel="noopener">sscasn.bkn.go.id</a>. Ambang batas formasi umum mengacu pada Keputusan Menteri PANRB Nomor 321 Tahun 2024; ketentuan tiap tahun dan tiap formasi dapat berubah.</p>
+    <p class="mt-s">Soal latihan di situs ini dibuat untuk belajar dan bukan soal asli ujian.</p>
+  </div>
+</footer>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+(function(){
+'use strict';
+/* ============ util ============ */
+const $=(s,r)=>(r||document).querySelector(s);
+const $$=(s,r)=>[...(r||document).querySelectorAll(s)];
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const pad=n=>String(n).padStart(2,'0');
+const ymd=d=>d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate());
+const pd=s=>{const a=s.split('-').map(Number);return new Date(a[0],a[1]-1,a[2]);};
+const addDays=(d,n)=>{const x=new Date(d);x.setDate(x.getDate()+n);return x;};
+const today0=()=>{const d=new Date();d.setHours(0,0,0,0);return d;};
+const dayDiff=(a,b)=>Math.round((a-b)/864e5);
+const fmtD=(d,o)=>d.toLocaleDateString('id-ID',o||{day:'numeric',month:'short'});
+const weekMon=d=>addDays(d,-((d.getDay()+6)%7));
+const nextMonday=()=>{const t=today0();const dow=(t.getDay()+6)%7;return ymd(dow===0?t:addDays(t,7-dow));};
+const r5=x=>Math.max(5,Math.round(x/5)*5);
+const hm=m=>m>=60?(Math.floor(m/60)+' j'+(m%60?' '+(m%60)+' m':'')):(m+' m');
+const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;};
+function toast(m){const t=$('#toast');t.textContent=m;t.classList.add('on');clearTimeout(toast.h);toast.h=setTimeout(()=>t.classList.remove('on'),2600);}
+
+/* ============ data ============ */
+const SUB={
+  twk:{k:'twk',name:'TWK',full:'Tes Wawasan Kebangsaan',n:30,max:150,pg:65,minutes:22,safe:90,safeTxt:'18 soal benar'},
+  tiu:{k:'tiu',name:'TIU',full:'Tes Intelegensia Umum',n:35,max:175,pg:80,minutes:43,safe:105,safeTxt:'21 soal benar'},
+  tkp:{k:'tkp',name:'TKP',full:'Tes Karakteristik Pribadi',n:45,max:225,pg:166,minutes:35,safe:190,safeTxt:'rata-rata 4,2 per soal'}
+};
+const PROFILES={joshua:'Joshua',bagas:'Bagas Wiratama'};
+const PRESETS={6:[1,2,2,1],8:[2,3,2,1],10:[2,4,2,2],12:[3,4,3,2]};
+const PHASES=[
+  {id:'twk',pk:1,label:'Paket 1',sub:'TWK',alloc:{twk:65,tiu:25,tkp:10}},
+  {id:'tiu',pk:2,label:'Paket 2',sub:'TIU',alloc:{twk:20,tiu:65,tkp:15}},
+  {id:'tkp',pk:3,label:'Paket 3',sub:'TKP',alloc:{twk:15,tiu:25,tkp:60}},
+  {id:'sim',pk:4,label:'Paket 4',sub:'Simulasi',alloc:{twk:25,tiu:40,tkp:35}}
+];
+const LISTS={
+  twk:['Pancasila: sejarah dan nilai sila','UUD 1945: pembukaan, pasal kunci, amandemen','NKRI, Bhinneka Tunggal Ika, lembaga negara','Nasionalisme: pergerakan nasional dan Wawasan Nusantara','Integritas: antikorupsi, gratifikasi, BerAKHLAK','Bela Negara: dasar hukum dan nilai dasar','Bahasa Indonesia: ejaan, kata baku, kalimat efektif','Bahasa Indonesia: ide pokok dan bacaan'],
+  tiu:['Verbal: sinonim, antonim, analogi','Silogisme dan logika proposisi','Penalaran analitis: urutan, posisi, jadwal','Pemahaman bacaan','Hitungan dasar, pecahan, persen','Soal cerita: kecepatan, usaha, umur','Deret angka dan huruf','Perbandingan, himpunan, peluang dasar','Aljabar dasar, KPK dan FPB','Figural: analogi dan serial gambar','Figural: ketidaksamaan, rotasi, cermin','Trik cepat dan manajemen waktu TIU'],
+  tkp:['Pelayanan publik','Jejaring kerja','Sosial budaya','Teknologi informasi dan komunikasi','Profesionalisme','Anti radikalisme','Pola skor dan nilai BerAKHLAK','Kasus campuran 45 soal dalam 35 menit'],
+  sim:['Bedah kisi-kisi dan strategi waktu','Latihan campuran 55 soal','Perkuat subtes terlemah','Latihan kecepatan TIU numerik','Bedah hasil tryout, catat soal salah','Tutup celah materi yang berulang','Latihan campuran 55 soal kedua','Persiapan teknis CAT dan dokumen']
+};
+const TOPICS={
+  twk:[['Pancasila','Sejarah BPUPKI dan PPKI, rumusan sila, nilai dan pengamalan'],['UUD 1945','Pembukaan, pasal kunci, empat kali amandemen, lembaga negara'],['NKRI dan Bhinneka Tunggal Ika','Bentuk negara, otonomi daerah, keberagaman'],['Nasionalisme','Pergerakan nasional, Sumpah Pemuda, Wawasan Nusantara'],['Integritas','Nilai antikorupsi, gratifikasi, konflik kepentingan, BerAKHLAK'],['Bela Negara','Dasar hukum, lima nilai dasar, bentuk ancaman'],['Bahasa Indonesia','Ejaan, kata baku, kalimat efektif, ide pokok']],
+  tiu:[['Verbal: sinonim, antonim, analogi','Hubungan antarkata dan makna dalam konteks'],['Silogisme dan logika','Diagram Venn, modus ponens dan tollens'],['Penalaran analitis','Susunan, posisi, jadwal, tabel bantu'],['Pemahaman bacaan','Gagasan utama dan simpulan'],['Hitungan dasar dan persen','Pecahan, desimal, persentase'],['Soal cerita','Kecepatan, usaha bersama, umur, aritmetika sosial'],['Deret angka dan huruf','Aritmetika, geometri, pola bertingkat'],['Perbandingan, himpunan, peluang','Senilai, berbalik nilai, diagram Venn'],['Figural: analogi dan serial','Pola perubahan gambar'],['Figural: ketidaksamaan, rotasi, cermin','Mencari gambar yang berbeda atau bayangan']],
+  tkp:[['Pelayanan publik','Melayani cepat, ramah, sesuai prosedur'],['Jejaring kerja','Kerja sama tim, komunikasi, penyelesaian konflik'],['Sosial budaya','Menghormati keberagaman dan adat setempat'],['Teknologi informasi dan komunikasi','Adaptif, belajar teknologi baru, etika digital'],['Profesionalisme','Tanggung jawab, disiplin, kualitas kerja'],['Anti radikalisme','Menolak ujaran kebencian, menjaga persatuan'],['Pola jawaban dan waktu','Mengenali jawaban skor 5 dan menjaga ritme']],
+  sim:[['Tryout penuh pertama','Kerjakan 110 soal dalam 100 menit tanpa jeda'],['Tryout penuh kedua','Bandingkan dengan tryout pertama'],['Tryout penuh ketiga','Pastikan ketiga subtes stabil di atas ambang batas'],['Semua subtes lolos dalam satu tryout','TWK 65, TIU 80, TKP 166'],['Persiapan teknis dan dokumen','Kartu peserta, identitas, lokasi dan jam ujian']]
+};
+const STRAT={
+  twk:['Hafalkan fakta bertanggal dan angka dengan kartu hafalan, 15 menit setiap hari lebih ampuh daripada maraton akhir pekan.','Pahami pola soal studi kasus integritas: pilih tindakan yang taat aturan dan melapor lewat jalur resmi.','Soal Bahasa Indonesia cepat dijawab bila terbiasa dengan kata baku dan ciri kalimat efektif.','Targetkan TWK selesai dalam 22 menit agar waktu TIU aman.'],
+  tiu:['TIU paling sering menjegal. Sisihkan porsi waktu terbesar dan latihan hitungan setiap hari, walau hanya 20 menit.','Tulis langkah pendek, jangan hitung di kepala untuk soal cerita.','Lewati soal yang menahan lebih dari 90 detik, tandai, lalu kembali bila sisa waktu.','Kuasai rumus deret, usaha bersama, dan himpunan sampai otomatis.'],
+  tkp:['Skor 5 biasanya tindakan proaktif, solutif, sesuai aturan, dan mengutamakan pelayanan.','Hindari pilihan yang pasif, menyalahkan orang lain, melanggar aturan, atau menunda.','Baca semua pilihan sebelum menjawab, karena beda skor kadang hanya pada satu frasa.','Targetkan 45 soal dalam 35 menit, kira-kira 47 detik per soal.'],
+  sim:['Kerjakan tryout dengan kondisi mirip hari H: layar komputer, 100 menit, tanpa membuka catatan.','Bedah setiap soal salah dan tulis penyebabnya: tidak tahu, salah hitung, atau terburu-buru.','Pilih subtes terlemah sebagai fokus perbaikan, bukan semuanya sekaligus.','Dua hari terakhir untuk ulasan ringan dan tidur cukup, bukan materi baru.']
+};
+const MATERI={
+ twk:[
+  ['Pancasila dan sejarah perumusannya',['<b>BPUPKI</b> bersidang 29 Mei sampai 1 Juni 1945 (dasar negara) dan pertengahan Juli 1945 (rancangan UUD).','Tiga pidato dasar negara: Mohammad Yamin (29 Mei), Soepomo (31 Mei), Soekarno (1 Juni). <b>1 Juni 1945</b> diperingati sebagai hari lahir Pancasila.','<b>Piagam Jakarta</b> disusun Panitia Sembilan pada 22 Juni 1945.','<b>PPKI</b> pada 18 Agustus 1945 mengesahkan UUD 1945, memilih Presiden dan Wakil Presiden, dan menetapkan rumusan sila pertama tanpa tujuh kata.','Pancasila berfungsi sebagai dasar negara, ideologi nasional, dan pandangan hidup bangsa.']],
+  ['UUD 1945 dan lembaga negara',['Pembukaan terdiri dari 4 alinea. Alinea keempat memuat tujuan negara dan dasar negara.','Amandemen dilakukan <b>empat kali</b>, tahun 1999 sampai 2002.','Pasal 1: (1) negara kesatuan berbentuk republik, (2) kedaulatan di tangan rakyat menurut UUD, (3) negara hukum.','Lembaga negara: MPR, DPR, DPD, Presiden, MA, MK, BPK, KY.','<b>MK</b> menguji undang-undang terhadap UUD. <b>MA</b> menguji peraturan di bawah undang-undang terhadap undang-undang.','Hierarki peraturan: UUD 1945, Ketetapan MPR, UU atau Perppu, PP, Perpres, Perda provinsi, Perda kabupaten atau kota.']],
+  ['Nasionalisme dan Wawasan Nusantara',['Budi Utomo 20 Mei 1908 menjadi tonggak Kebangkitan Nasional.','Sumpah Pemuda 28 Oktober 1928: satu tanah air, satu bangsa, satu bahasa persatuan.','Proklamasi 17 Agustus 1945.','Deklarasi Djuanda 13 Desember 1957 menegaskan laut di antara pulau sebagai bagian wilayah negara.','Nasionalisme berbeda dari chauvinisme: mencintai bangsa sendiri tanpa merendahkan bangsa lain.']],
+  ['Integritas dan nilai ASN',['Sembilan nilai antikorupsi: jujur, peduli, mandiri, disiplin, tanggung jawab, kerja keras, sederhana, berani, adil.','Gratifikasi yang berhubungan dengan jabatan wajib dilaporkan ke KPK <b>paling lambat 30 hari kerja</b> sejak diterima.','Nilai dasar ASN <b>BerAKHLAK</b>: Berorientasi pelayanan, Akuntabel, Kompeten, Harmonis, Loyal, Adaptif, Kolaboratif.','Tiga peran ASN: pelaksana kebijakan publik, pelayan publik, perekat dan pemersatu bangsa.','Pada soal kasus, pilih tindakan yang menolak penyimpangan, taat aturan, dan melapor lewat saluran resmi.']],
+  ['Bela Negara',['Dasar hukum: UUD 1945 Pasal 27 ayat (3) dan Pasal 30, serta UU 3 Tahun 2002 tentang Pertahanan Negara.','Lima nilai dasar: cinta tanah air; sadar berbangsa dan bernegara; yakin Pancasila sebagai ideologi negara; rela berkorban; kemampuan awal bela negara.','Sistem pertahanan semesta melibatkan seluruh warga, wilayah, dan sumber daya nasional.','Bela negara tidak selalu militer: menaati hukum, membayar pajak, dan berprestasi juga bentuk bela negara.']],
+  ['Bahasa Indonesia',['Kata baku yang sering diuji: apotek, antre, analisis, risiko, aktivitas, izin, objek, kualitas, nasihat, praktik, sistem.','Kalimat efektif: hemat, jelas, sejajar bentuknya, dan tidak berlebihan. Hindari pleonasme seperti "naik ke atas".','Ide pokok biasanya ada di kalimat utama: awal paragraf (deduktif), akhir (induktif), atau di keduanya.','Perhatikan tanda baca dan huruf kapital sesuai pedoman ejaan terbaru.']]
+ ],
+ tiu:[
+  ['Verbal: analogi, sinonim, antonim',['Analogi: ubah hubungan kata pertama dan kedua menjadi satu kalimat, lalu uji kalimat itu pada pilihan.','Jenis hubungan umum: sebab-akibat, bagian-keseluruhan, alat-fungsi, pelaku-objek, tingkatan.','Sinonim dan antonim: pahami arti dalam konteks, jangan hanya arti pertama yang teringat.']],
+  ['Silogisme dan penalaran',['"Semua A adalah B" tidak berarti "semua B adalah A".','Gambar diagram Venn untuk tiap premis, lalu cari simpulan yang <b>pasti</b> benar pada semua gambar.','Modus ponens: jika P maka Q; P benar, maka Q benar. Modus tollens: jika P maka Q; Q salah, maka P salah.','Penalaran analitis: buat tabel kecil dan mulai dari informasi yang paling pasti.']],
+  ['Numerik: rumus yang wajib hafal',['Deret aritmetika: <b>Un = a + (n − 1)b</b>; <b>Sn = n/2 · (2a + (n − 1)b)</b>.','Deret geometri: <b>Un = a · r^(n − 1)</b>.','Kecepatan: <b>s = v · t</b>. Usaha bersama: <b>1/t = 1/a + 1/b</b>.','Himpunan: <b>n(A ∪ B) = n(A) + n(B) − n(A ∩ B)</b>.','Persen untung: (jual − beli) ÷ beli × 100%.','Pecahan penting: 1/8 = 12,5%, 1/6 ≈ 16,7%, 1/3 ≈ 33,3%.']],
+  ['Figural',['Cari satu aturan perubahan dulu: rotasi, pencerminan, penambahan, pengurangan, atau perpindahan posisi.','Periksa jumlah elemen, arah, dan warna secara bergantian, jangan sekaligus.','Latihan 10 soal figural per hari selama dua minggu biasanya cukup membuat pola cepat terbaca.']],
+  ['Strategi mengerjakan TIU',['Urutkan: soal mudah dulu, soal numerik panjang belakangan.','Batasi 90 detik per soal. Tandai dan lanjut bila belum ketemu jalan.','Gunakan eliminasi: coret dua pilihan yang jelas salah sebelum menebak.']]
+ ],
+ tkp:[
+  ['Enam aspek yang diuji',['<b>Pelayanan publik:</b> melayani warga dengan cepat, ramah, dan sesuai prosedur.','<b>Jejaring kerja:</b> bekerja sama, berkomunikasi, dan menyelesaikan konflik di tim.','<b>Sosial budaya:</b> menghormati perbedaan suku, agama, dan adat.','<b>TIK:</b> adaptif terhadap teknologi baru dan beretika di ruang digital.','<b>Profesionalisme:</b> bertanggung jawab, disiplin, dan menjaga kualitas kerja.','<b>Anti radikalisme:</b> menolak ujaran kebencian dan menjaga persatuan.']],
+  ['Pola jawaban bernilai tinggi',['Skor 5: proaktif, memberi solusi, sesuai aturan, dan berorientasi pada pelayanan dan tujuan organisasi.','Skor 4: baik dan benar, tetapi kurang inisiatif atau kurang tuntas.','Skor 3: netral atau menyerahkan ke pihak lain.','Skor 2: pasif, menunggu, atau menunda.','Skor 1: melanggar aturan, menyalahkan, mengabaikan, atau mementingkan diri sendiri.']],
+  ['Kebiasaan berpikir ASN',['Utamakan kepentingan publik dan organisasi di atas kepentingan pribadi, selama sesuai aturan.','Komunikasikan langsung dan sopan sebelum meneruskan masalah ke atasan.','Bila instruksi bertentangan dengan aturan, tawarkan alternatif yang sesuai aturan.','Pelajari BerAKHLAK sebagai kompas untuk menilai pilihan jawaban.']]
+ ]
+};
+const CARDS={
+ twk:[
+  ['Kapan hari lahir Pancasila dan siapa yang berpidato?','1 Juni 1945, Ir. Soekarno dalam sidang pertama BPUPKI.'],
+  ['Siapa ketua BPUPKI dan siapa ketua PPKI?','BPUPKI: dr. K.R.T. Radjiman Wedyodiningrat. PPKI: Ir. Soekarno.'],
+  ['Apa hasil sidang PPKI 18 Agustus 1945?','Mengesahkan UUD 1945, memilih Presiden dan Wakil Presiden, dan membentuk Komite Nasional.'],
+  ['Apa isi alinea keempat Pembukaan UUD 1945?','Tujuan negara, dasar negara Pancasila, bentuk negara republik, dan kedaulatan rakyat.'],
+  ['Inti Pasal 1 UUD 1945 ayat (1), (2), (3)?','(1) negara kesatuan berbentuk republik; (2) kedaulatan di tangan rakyat dan dilaksanakan menurut UUD; (3) negara hukum.'],
+  ['Berapa kali UUD 1945 diamandemen dan kapan?','Empat kali, pada tahun 1999 sampai 2002.'],
+  ['Beda kewenangan MK dan MA dalam menguji aturan?','MK menguji UU terhadap UUD 1945. MA menguji peraturan di bawah UU terhadap UU.'],
+  ['Sebutkan lima nilai dasar bela negara.','Cinta tanah air; sadar berbangsa dan bernegara; yakin Pancasila sebagai ideologi negara; rela berkorban; kemampuan awal bela negara.'],
+  ['Batas waktu melaporkan gratifikasi ke KPK?','Paling lambat 30 hari kerja sejak gratifikasi diterima.'],
+  ['Apa kepanjangan BerAKHLAK?','Berorientasi pelayanan, Akuntabel, Kompeten, Harmonis, Loyal, Adaptif, Kolaboratif.'],
+  ['Apa tiga peran ASN?','Pelaksana kebijakan publik, pelayan publik, dan perekat serta pemersatu bangsa.'],
+  ['Apa yang terjadi pada 28 Oktober 1928?','Sumpah Pemuda (Kongres Pemuda II): satu tanah air, satu bangsa, satu bahasa persatuan.'],
+  ['Apa isi Deklarasi Djuanda, 13 Desember 1957?','Laut di antara pulau-pulau Indonesia menjadi bagian wilayah negara. Dasar konsep Wawasan Nusantara.'],
+  ['Dari kitab mana semboyan Bhinneka Tunggal Ika?','Kakawin Sutasoma karya Mpu Tantular.']
+ ],
+ tiu:[
+  ['Suku ke-n deret aritmetika','Un = a + (n − 1)b'],
+  ['Jumlah n suku pertama deret aritmetika','Sn = n/2 × (2a + (n − 1)b)'],
+  ['Suku ke-n deret geometri','Un = a × r^(n − 1)'],
+  ['Dua pekerja bekerja bersama, berapa lama selesai?','1/t = 1/a + 1/b. Contoh 6 hari dan 12 hari: t = 4 hari.'],
+  ['Hubungan jarak, kecepatan, waktu','s = v × t. Kecepatan rata-rata = jarak total ÷ waktu total.'],
+  ['Gabungan dua himpunan','n(A ∪ B) = n(A) + n(B) − n(A ∩ B)'],
+  ['Persentase untung','(harga jual − harga beli) ÷ harga beli × 100%'],
+  ['Rata-rata gabungan dua kelompok','(n1·x1 + n2·x2) ÷ (n1 + n2)'],
+  ['Peluang suatu kejadian','Banyak kejadian yang diinginkan ÷ banyak seluruh kemungkinan'],
+  ['Pecahan yang sering muncul dalam persen','1/2 = 50%, 1/3 ≈ 33,3%, 1/4 = 25%, 1/5 = 20%, 1/8 = 12,5%'],
+  ['Hati-hati pada silogisme','"Semua A adalah B" tidak berarti "semua B adalah A". Gambar diagram Venn.'],
+  ['Cara cepat soal analogi verbal','Susun kalimat hubungan kata pertama dan kedua, lalu terapkan kalimat yang sama pada pilihan jawaban.']
+ ],
+ tkp:[
+  ['Ciri jawaban TKP bernilai 5','Proaktif, memberi solusi, sesuai aturan, mengutamakan pelayanan dan kepentingan organisasi.'],
+  ['Ciri jawaban TKP bernilai 1','Pasif, menyalahkan pihak lain, melanggar aturan, atau mengutamakan kepentingan pribadi.'],
+  ['Konflik dengan rekan kerja: urutan tindakan','Bicara langsung dan baik-baik, cari titik temu, libatkan atasan bila belum selesai.'],
+  ['Menghadapi perbedaan budaya atau agama','Menghormati, belajar kebiasaan setempat, dan membangun komunikasi yang inklusif.'],
+  ['Ada teknologi baru di kantor','Belajar aktif, berlatih, lalu bantu rekan. Hindari menolak atau menunggu.'],
+  ['Menemukan ujaran yang memecah belah','Menegur dengan baik, meluruskan dengan fakta, dan melapor lewat jalur resmi bila berulang.'],
+  ['Instruksi atasan bertentangan dengan aturan','Sampaikan alternatif sesuai aturan dengan sopan. Jangan menolak kasar dan jangan melanggar.']
+ ]
+};
+const QUIZ=[
+ {s:'twk',q:'Sidang pertama BPUPKI yang membahas dasar negara berlangsung pada...',o:['29 Mei sampai 1 Juni 1945','28 Oktober 1928','10 sampai 16 Juli 1945','18 Agustus 1945','7 Agustus 1945'],e:'Sidang pertama BPUPKI berlangsung 29 Mei sampai 1 Juni 1945 dan membahas dasar negara. Sidang kedua pada Juli 1945 membahas rancangan UUD. Tanggal 18 Agustus 1945 adalah sidang PPKI.'},
+ {s:'twk',q:'UUD 1945 telah diamandemen sebanyak...',o:['4 kali (1999 sampai 2002)','2 kali','3 kali','5 kali','6 kali'],e:'Amandemen UUD 1945 dilakukan empat kali: 1999, 2000, 2001, dan 2002.'},
+ {s:'twk',q:'Berikut yang BUKAN termasuk nilai dasar bela negara adalah...',o:['Menguasai teknologi informasi','Cinta tanah air','Sadar berbangsa dan bernegara','Rela berkorban','Yakin Pancasila sebagai ideologi negara'],e:'Lima nilai dasar bela negara: cinta tanah air, sadar berbangsa dan bernegara, yakin Pancasila sebagai ideologi negara, rela berkorban, dan kemampuan awal bela negara.'},
+ {s:'twk',q:'Seorang ASN menerima bingkisan dari penyedia jasa setelah proyek selesai. Tindakan yang paling sesuai dengan prinsip integritas adalah...',o:['Melaporkannya ke KPK paling lambat 30 hari kerja','Menerimanya karena proyek sudah selesai','Membagikannya kepada rekan satu ruangan','Menyimpannya diam-diam sampai ada yang bertanya','Menunggu sampai atasan menanyakan'],e:'Penerimaan yang berhubungan dengan jabatan termasuk gratifikasi dan wajib dilaporkan ke KPK paling lambat 30 hari kerja sejak diterima.'},
+ {s:'twk',q:'Kata baku yang benar adalah...',o:['apotek','apotik','antri','analisa','resiko'],e:'Bentuk baku: apotek, antre, analisis, risiko.'},
+ {s:'twk',q:'Semboyan Bhinneka Tunggal Ika diambil dari kitab...',o:['Sutasoma karya Mpu Tantular','Negarakertagama karya Mpu Prapanca','Arjunawiwaha karya Mpu Kanwa','Pararaton','Bharatayuddha karya Mpu Sedah dan Mpu Panuluh'],e:'Bhinneka Tunggal Ika terdapat dalam Kakawin Sutasoma karya Mpu Tantular.'},
+ {s:'tiu',q:'DOKTER : PASIEN = GURU : ...',o:['Murid','Sekolah','Buku','Kelas','Ujian'],e:'Hubungannya adalah pelaku dan orang yang dilayani. Dokter melayani pasien, guru mengajar murid.'},
+ {s:'tiu',q:'Semua pegawai yang jujur dipromosikan. Sebagian pegawai tidak dipromosikan. Simpulan yang pasti benar adalah...',o:['Sebagian pegawai tidak jujur','Sebagian pegawai yang jujur tidak dipromosikan','Semua pegawai tidak jujur','Pegawai yang tidak jujur pasti tidak dipromosikan','Semua pegawai dipromosikan'],e:'Pegawai yang tidak dipromosikan pasti tidak jujur, sebab semua yang jujur dipromosikan. Jadi sebagian pegawai tidak jujur. Pilihan lain tidak bisa dipastikan dari premis.'},
+ {s:'tiu',q:'25% dari 240 ditambah 1/3 dari 90 adalah...',o:['90','80','85','95','100'],e:'25% × 240 = 60 dan 1/3 × 90 = 30, jumlahnya 90.'},
+ {s:'tiu',q:'Lanjutkan deret: 2, 5, 11, 23, 47, ...',o:['95','94','93','96','97'],e:'Polanya dikali 2 lalu ditambah 1. 47 × 2 + 1 = 95.'},
+ {s:'tiu',q:'Mobil menempuh 180 km dalam 2,5 jam. Dengan kecepatan sama, jarak yang ditempuh dalam 4 jam adalah...',o:['288 km','270 km','300 km','312 km','240 km'],e:'Kecepatan = 180 ÷ 2,5 = 72 km/jam. Dalam 4 jam: 72 × 4 = 288 km.'},
+ {s:'tiu',q:'Ani menyelesaikan pekerjaan dalam 6 hari, Budi dalam 12 hari. Bila bekerja bersama, pekerjaan selesai dalam...',o:['4 hari','5 hari','6 hari','3 hari','9 hari'],e:'Per hari: 1/6 + 1/12 = 3/12 = 1/4 pekerjaan. Jadi selesai dalam 4 hari.'},
+ {s:'tkp',a:'Pelayanan publik',q:'Menjelang loket tutup, antrean masih panjang dan seorang warga datang membawa berkas lengkap. Sikap Anda adalah...',o:[[5,'Melayani semua yang sudah antre sampai selesai dan memberi tahu estimasi waktu kepada warga yang menunggu'],[4,'Melayani sesuai jam layanan lalu mengarahkan warga yang tersisa mendaftar daring untuk esok hari'],[3,'Meminta rekan lain mengambil alih sisa antrean karena jam kerja Anda sudah habis'],[2,'Menutup loket tepat waktu karena sudah ada aturan jam layanan'],[1,'Melayani warga yang Anda kenal lebih dulu agar cepat selesai']],e:'Pilihan terbaik tetap melayani dan memberi informasi jelas. Pilihan skor rendah bersifat pasif atau mementingkan diri.'},
+ {s:'tkp',a:'Jejaring kerja',q:'Rekan senior belum mengerjakan bagiannya sehingga laporan tim terancam terlambat. Anda akan...',o:[[5,'Menanyakan kendalanya secara pribadi, menawarkan bantuan, dan menyepakati pembagian tugas agar laporan tepat waktu'],[4,'Mengerjakan bagian rekan itu agar tepat waktu, lalu melapor kepada atasan'],[3,'Mengingatkan rekan lewat grup kerja agar semua anggota tim tahu'],[2,'Menunggu rekan menyelesaikan karena itu bukan tugas Anda'],[1,'Menyalahkan rekan itu di depan tim']],e:'Komunikasi langsung dan solusi bersama lebih baik daripada menunggu atau mempermalukan rekan.'},
+ {s:'tkp',a:'Sosial budaya',q:'Warga tempat Anda bertugas mengundang Anda ke acara adat yang bersamaan dengan pekerjaan Anda. Anda akan...',o:[[5,'Mengatur pekerjaan lebih dulu agar bisa hadir, belajar tata cara adat dari warga, lalu ikut dengan menghormati kebiasaan setempat'],[4,'Hadir setelah pekerjaan selesai dan mengikuti arahan warga di tempat'],[3,'Meminta maaf tidak bisa hadir dan menitipkan salam melalui rekan'],[2,'Hadir tetapi hanya mengamati dari jauh tanpa berinteraksi'],[1,'Menolak karena adat itu tidak sesuai dengan kebiasaan Anda']],e:'Menghargai adat sambil tetap bertanggung jawab pada pekerjaan adalah sikap yang paling matang.'},
+ {s:'tkp',a:'TIK',q:'Kantor Anda mulai memakai aplikasi administrasi baru yang belum Anda kuasai. Anda akan...',o:[[5,'Mengikuti pelatihan, berlatih mandiri, lalu membagikan panduan singkat kepada rekan yang kesulitan'],[4,'Mengikuti pelatihan dan berlatih mandiri sampai mahir'],[3,'Bertanya kepada rekan setiap kali menemui kesulitan'],[2,'Tetap memakai cara lama sambil menunggu semua rekan beralih'],[1,'Menolak memakai aplikasi karena cara lama lebih mudah']],e:'Adaptif dan membantu orang lain adalah ciri jawaban terbaik.'},
+ {s:'tkp',a:'Profesionalisme',q:'Atasan meminta laporan selesai besok pagi, tetapi data belum lengkap. Anda akan...',o:[[5,'Menghubungi unit terkait untuk melengkapi data, mengerjakan bagian yang bisa, dan melaporkan kemajuan serta kendala kepada atasan'],[4,'Menyelesaikan dengan data yang ada dan memberi catatan bahwa data belum lengkap'],[3,'Meminta atasan memperpanjang tenggat tanpa mencoba melengkapi data'],[2,'Menunggu data dikirim unit terkait baru mulai mengerjakan'],[1,'Mengisi data yang kosong dengan perkiraan agar laporan terlihat lengkap']],e:'Jujur soal kendala sambil tetap berusaha menyelesaikan adalah inti profesionalisme. Memalsukan data selalu skor terendah.'},
+ {s:'tkp',a:'Anti radikalisme',q:'Rekan kerja membagikan ujaran kebencian terhadap kelompok tertentu di grup WhatsApp kantor. Anda akan...',o:[[5,'Mengingatkan rekan secara pribadi agar menghapus dan menjelaskan dampaknya, lalu melapor kepada atasan bila berulang'],[4,'Menegur di grup agar tidak menyebarkan ujaran kebencian'],[3,'Keluar dari grup tanpa berkomentar'],[2,'Mengabaikan karena itu hak pribadi rekan'],[1,'Ikut membagikan agar rekan lain tahu']],e:'Menegur dengan cara baik dan memakai jalur resmi bila berulang menjaga persatuan tanpa menambah konflik.'}
+];
+const FAQ=[
+ ['Apa itu SKD, dan apa bedanya dengan SKB?','SKD (Seleksi Kompetensi Dasar) terdiri dari TWK, TIU, dan TKP: 110 soal dalam 100 menit dengan sistem CAT. Peserta yang lolos ambang batas lanjut ke SKB (Seleksi Kompetensi Bidang) yang menguji kemampuan sesuai jabatan yang dilamar.'],
+ ['Berapa nilai yang harus dicapai untuk lolos?','Untuk formasi umum, ambang batasnya 65 untuk TWK, 80 untuk TIU, dan 166 untuk TKP, dan ketiganya harus terpenuhi. Formasi khusus dan seleksi lain bisa memakai angka berbeda, jadi pastikan lewat pengumuman resmi formasi yang Anda lamar.'],
+ ['Apakah jawaban salah mengurangi nilai?','Tidak. Pada TWK dan TIU jawaban salah bernilai 0, pada TKP setiap pilihan bernilai 1 sampai 5. Karena itu jawab semua soal, termasuk dengan menebak di menit terakhir.'],
+ ['Kapan jadwal pendaftaran dan ujiannya?','Jadwal ditetapkan dan diumumkan oleh BKN dan Kementerian PANRB. Pantau sscasn.bkn.go.id dan kanal resmi, dan waspada kabar jadwal yang beredar di media sosial. Begitu tanggal ujian jelas, isikan di bagian atas halaman agar hitung mundur akurat.'],
+ ['Bagaimana bila tidak sempat belajar sesuai jadwal?','Geser tugas ke hari berikutnya dan jangan menumpuk. Kalau sering tertinggal, kurangi jam belajar per minggu atau pilih durasi program yang lebih panjang di bagian Jadwal. Konsisten dengan porsi kecil lebih baik daripada rencana besar yang ditinggalkan.'],
+ ['Di mana progres belajar disimpan?','Di browser perangkat yang dipakai. Joshua dan Bagas punya profil terpisah, tetapi progres tidak berpindah antarperangkat dan hilang bila data browser dihapus. Catat skor tryout penting di tempat lain juga.'],
+ ['Dari mana soal latihan di situs ini?','Soal dibuat khusus untuk belajar dengan format mirip SKD, bukan soal asli ujian. Untuk uji sebenarnya, gunakan juga tryout CAT penuh dari platform latihan, lalu catat hasilnya di bagian Tryout.']
+];
+
+/* ============ state ============ */
+const KEY='skd-jalur-v1';
+const newProfile=()=>({weeks:8,hours:14,start:nextMonday(),exam:'',rating:{twk:3,tiu:3,tkp:3},done:{},topics:{},cards:{},tryouts:[],log:[],quiz:{}});
+let DB=null;
+try{DB=JSON.parse(localStorage.getItem(KEY));}catch(e){DB=null;}
+if(!DB||!DB.p){DB={profile:'joshua',p:{}};}
+['joshua','bagas'].forEach(k=>{DB.p[k]=Object.assign(newProfile(),DB.p[k]||{});DB.p[k].rating=Object.assign({twk:3,tiu:3,tkp:3},DB.p[k].rating);});
+if(!PROFILES[DB.profile])DB.profile='joshua';
+const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(DB));}catch(e){}};
+const P=()=>DB.p[DB.profile];
+const UI={pkg:'twk',week:null,mat:'twk',deck:'twk',queue:[],flip:false,Q:null};
+
+/* ============ plan ============ */
+const FR=[.15,.15,.15,.15,.12,.20,.08];
+const DAYN=['Senin','Selasa','Rabu','Kamis','Jumat','Sabtu','Minggu'];
+function weakest(p){const r=p.rating;let a='tiu';['twk','tkp'].forEach(b=>{if(r[b]<r[a])a=b;});return a;}
+function pick(list,i,slots){
+  if(list.length<=slots){const b=list[i%list.length];return i>=list.length?'Pendalaman: '+b:b;}
+  const a=Math.floor(i*list.length/slots),b=Math.max(a+1,Math.floor((i+1)*list.length/slots));
+  return list.slice(a,b).join(' + ');
+}
+function makeDay(p,ph,k,d,w,slots){
+  const H=p.hours;let min=r5(H*60*FR[d]);const key='d'+w+'-'+d;
+  let title,sub=ph.id==='sim'?'mix':ph.id,parts,note='';
+  if(d<4){
+    title=pick(LISTS[ph.id],k*4+d,slots);
+    parts=ph.id==='sim'?[['Latihan',.55],['Bedah',.45]]:[['Materi',.35],['Latihan soal',.45],['Review salah',.2]];
+  }else if(d===4){
+    sub='mix';
+    if(ph.id==='sim'){title='Bedah hasil tryout dan peta kelemahan';parts=[['Bedah',.6],['Perbaikan',.4]];}
+    else{title='Latihan campuran dan review kesalahan';parts=[['Latihan',.65],['Review salah',.35]];
+      const wk=weakest(p);if(wk!==ph.id)note='Tambahan 15 menit untuk '+SUB[wk].name+', subtes yang Anda nilai paling lemah.';}
+  }else if(d===5){
+    if(ph.id==='sim'){title='Tryout penuh SKD: 110 soal, 100 menit';min=Math.max(min,150);parts=[['Tryout',100/min],['Bedah',(min-100)/min]];}
+    else{title='Mini tryout '+SUB[ph.id].name+': '+SUB[ph.id].n+' soal';const tr=SUB[ph.id].minutes,bd=r5(min*.35),ex=Math.max(5,min-tr-bd);parts=[['Mini tryout',tr/min],['Latihan tambahan',ex/min],['Bedah salah',bd/min]];}
+  }else{
+    sub='mix';title='Kartu hafalan dan rangkum minggu ini';parts=[['Kartu hafalan',.5],['Rangkuman',.5]];
+  }
+  return {key,d,title,sub,min,parts:parts.map(x=>[x[0],r5(min*x[1])]),note};
+}
+function buildPlan(p){
+  const cfg=PRESETS[p.weeks]||PRESETS[8];const phases=[],weeks=[];let w=0;
+  PHASES.forEach((ph,pi)=>{
+    const nw=cfg[pi];const slots=nw*4;
+    phases.push(Object.assign({},ph,{nw:nw,startW:w,endW:w+nw-1,hours:nw*p.hours}));
+    for(let k=0;k<nw;k++){
+      const wk={idx:w,phase:ph,wip:k,days:[]};
+      for(let d=0;d<7;d++)wk.days.push(makeDay(p,ph,k,d,w,slots));
+      weeks.push(wk);w++;
+    }
+  });
+  return {phases:phases,weeks:weeks,total:w};
+}
+function curWeek(p,plan){const diff=Math.floor(dayDiff(today0(),pd(p.start))/7);return Math.min(Math.max(diff,0),plan.total-1);}
+function subHours(plan){const t={twk:0,tiu:0,tkp:0};plan.phases.forEach(ph=>{['twk','tiu','tkp'].forEach(s=>{t[s]+=ph.hours*ph.alloc[s]/100;});});return t;}
+
+/* ============ static sections ============ */
+function renderStatic(){
+  $('#skdCards').innerHTML=['twk','tiu','tkp'].map(k=>{
+    const s=SUB[k];
+    const li={twk:['Pilar negara: Pancasila, UUD 1945, NKRI, Bhinneka Tunggal Ika','Nasionalisme, integritas, bela negara','Bahasa Indonesia'],tiu:['Verbal: analogi, silogisme, analitis, bacaan','Numerik: hitungan, deret, soal cerita','Figural: serial dan analogi gambar'],tkp:['Pelayanan publik, jejaring kerja','Sosial budaya, TIK','Profesionalisme, anti radikalisme']}[k];
+    return `<article class="card sub-card" data-sub="${k}"><span class="pill">${s.name}</span><h3>${s.full}</h3>
+    <dl class="kv"><dt>Jumlah soal</dt><dd class="mono">${s.n}</dd><dt>Skor maksimum</dt><dd class="mono">${s.max}</dd><dt>Ambang batas</dt><dd class="mono">${s.pg}</dd><dt>Target aman</dt><dd class="mono">${s.safe} (${s.safeTxt})</dd></dl>
+    <ul>${li.map(x=>'<li>'+x+'</li>').join('')}</ul></article>`;}).join('');
+  $('#timeBudget').innerHTML=['twk','tiu','tkp'].map(k=>{const s=SUB[k];return `<div data-sub="${k}" style="flex:${s.minutes}"><b>${s.minutes}'</b><span>${s.name} · ${Math.round(s.minutes*60/s.n)} detik per soal</span></div>`;}).join('');
+  $('#faqList').innerHTML=FAQ.map(f=>`<details class="faq"><summary>${esc(f[0])}</summary><p>${esc(f[1])}</p></details>`).join('');
+  $('#pkgTabs').innerHTML=PHASES.map(ph=>`<button type="button" class="tab" role="tab" data-act="pkg" data-id="${ph.id}" data-sub="${ph.id==='sim'?'mix':ph.id}"><i class="dot"></i>${ph.label} · ${ph.sub}</button>`).join('');
+  $('#matTabs').innerHTML=['twk','tiu','tkp'].map(k=>`<button type="button" class="tab" role="tab" data-act="mat" data-id="${k}" data-sub="${k}"><i class="dot"></i>${SUB[k].name}</button>`).join('');
+  $('#deckChips').innerHTML=['twk','tiu','tkp'].map(k=>`<button type="button" class="chip" data-act="deck" data-id="${k}" data-sub="${k}">${SUB[k].name}</button>`).join('');
+}
+
+/* ============ hero ============ */
+function renderHero(){
+  const p=P(),plan=buildPlan(p);
+  $('#heroName').textContent=PROFILES[DB.profile];
+  $$('.who button').forEach(b=>b.setAttribute('aria-pressed',b.dataset.id===DB.profile));
+  const end=addDays(pd(p.start),plan.total*7-1);
+  const target=p.exam?pd(p.exam):end;
+  const d=dayDiff(target,today0());
+  const label=p.exam?'hari lagi menuju ujian':'hari lagi menuju akhir program';
+  $('#heroCd').innerHTML=`<div class="cd"><b>${d>=0?d:0}</b><span>${d>=0?label:'tanggal sudah lewat'}</span></div>
+  <label class="field" for="examDate">Tanggal ujian (isi bila sudah diumumkan)
+    <input type="date" id="examDate" data-set="exam" value="${esc(p.exam||'')}"></label>`;
+}
+
+/* ============ dashboard ============ */
+function topicCount(p,pk){const t=TOPICS[pk];let n=0;t.forEach((x,i)=>{if(p.topics[pk+'-'+i])n++;});return [n,t.length];}
+function weekMinutes(p){const mon=weekMon(today0()),sun=addDays(mon,6);const o={twk:0,tiu:0,tkp:0,mix:0,sum:0};
+  p.log.forEach(l=>{const d=pd(l.date);if(d>=mon&&d<=sun){o[l.sub]=(o[l.sub]||0)+l.min;o.sum+=l.min;}});return o;}
+function streak(p){const set={};p.log.forEach(l=>{set[l.date]=1;});let d=today0();if(!set[ymd(d)])d=addDays(d,-1);let n=0;while(set[ymd(d)]){n++;d=addDays(d,-1);}return n;}
+function renderDash(){
+  const p=P(),plan=buildPlan(p);
+  $('#dasName').textContent='· '+PROFILES[DB.profile];
+  let done=0;Object.keys(p.done).forEach(k=>{const m=k.match(/^d(\d+)-(\d)$/);if(m&&p.done[k]&&+m[1]<plan.total)done++;});
+  const totalDays=plan.total*7;
+  $('#journey').innerHTML=PHASES.map(ph=>{const c=topicCount(p,ph.id);const pc=Math.round(c[0]/c[1]*100);
+    return `<div class="step" data-sub="${ph.id==='sim'?'mix':ph.id}"><b>${ph.label} · ${ph.sub}</b><div class="pct">${pc}%</div><div class="meter" style="margin:8px 0 4px"><i style="width:${pc}%"></i></div><span class="note">${c[0]} dari ${c[1]} topik</span></div>`;}).join('');
+  const wm=weekMinutes(p),target=p.hours*60;
+  let cardsKnown=0,cardsTotal=0;Object.keys(CARDS).forEach(k=>{CARDS[k].forEach((c,i)=>{cardsTotal++;if(p.cards[k+'-'+i])cardsKnown++;});});
+  let qp=0,qm=0;Object.keys(p.quiz).forEach(k=>{qp+=p.quiz[k].pts;qm+=p.quiz[k].max;});
+  const last=p.tryouts[p.tryouts.length-1];
+  const tile=(lab,val,small,pc)=>`<div class="card tile"><span class="lab">${lab}</span><span class="val">${val}<small> ${small}</small></span><div class="meter"><i style="width:${Math.min(100,pc)}%"></i></div></div>`;
+  let tpd=0,tpt=0;Object.keys(TOPICS).forEach(k=>{const c=topicCount(p,k);tpd+=c[0];tpt+=c[1];});
+  const tot=last?last.twk*5+last.tiu*5+last.tkp:0;
+  $('#tiles').innerHTML=
+    tile('Tugas jadwal',done,'dari '+totalDays,done/totalDays*100)+
+    tile('Jam belajar pekan ini',(wm.sum/60).toFixed(1).replace('.',','),'dari '+p.hours+' jam · beruntun '+streak(p)+' hari',wm.sum/target*100)+
+    tile('Topik dikuasai',tpd,'dari '+tpt,tpd/tpt*100)+
+    tile('Kartu hafal',cardsKnown,'dari '+cardsTotal,cardsKnown/cardsTotal*100)+
+    tile('Akurasi latihan soal',qm?Math.round(qp/qm*100)+'%':'–',qm?'':'belum ada latihan',qm?qp/qm*100:0)+
+    tile('Tryout terakhir',last?tot:'–',last?'dari 550 · lolos 311':'belum ada tryout',tot/550*100);
+}
+
+/* ============ paket ============ */
+function renderPaket(){
+  const p=P(),plan=buildPlan(p);const id=UI.pkg;
+  $$('#pkgTabs .tab').forEach(b=>b.setAttribute('aria-selected',b.dataset.id===id));
+  const ph=plan.phases.find(x=>x.id===id);const sub=id==='sim'?'mix':id;
+  const s=SUB[id];const startD=addDays(pd(p.start),ph.startW*7),endD=addDays(pd(p.start),(ph.endW+1)*7-1);
+  const c=topicCount(p,id);
+  const titles={twk:'Wawasan Kebangsaan',tiu:'Intelegensia Umum',tkp:'Karakteristik Pribadi',sim:'Simulasi dan Evaluasi'};
+  const facts=id==='sim'
+    ?`<div><b>3</b><span>tryout penuh</span></div><div><b>311</b><span>total lolos (65+80+166)</span></div><div><b>100'</b><span>per tryout</span></div>`
+    :`<div><b>${s.pg}</b><span>ambang batas</span></div><div><b>${s.safe}</b><span>target aman</span></div><div><b>${s.n}</b><span>soal di ujian</span></div>`;
+  const hrs=['twk','tiu','tkp'].map(k=>[k,ph.hours*ph.alloc[k]/100]);
+  $('#pkgPanel').innerHTML=`
+  <div class="panel-head" data-sub="${sub}">
+    <div><span class="pill">${ph.label} · ${ph.sub}</span><h3 style="margin-top:8px">${titles[id]}</h3>
+      <p class="note mt-s">${ph.nw} minggu · ${fmtD(startD)} sampai ${fmtD(endD)} · ${ph.hours} jam belajar</p></div>
+    <div class="facts">${facts}</div></div>
+  <div class="card" data-sub="${sub}">
+    <div class="hr-title"><h4>Topik yang harus dikuasai</h4><span class="pill">${c[0]}/${c[1]}</span></div>
+    <div class="meter" style="margin-bottom:6px"><i style="width:${c[0]/c[1]*100}%"></i></div>
+    ${TOPICS[id].map((t,i)=>{const k=id+'-'+i;return `<div class="topic"><input type="checkbox" id="tp-${k}" data-chk="topic" data-id="${k}" ${p.topics[k]?'checked':''}><label for="tp-${k}"><b>${esc(t[0])}</b><span>${esc(t[1])}</span></label></div>`;}).join('')}
+    <div class="cta"><button type="button" class="btn sm" data-act="gowk" data-i="${ph.startW}">Buka jadwal paket ini</button>${id!=='sim'?`<button type="button" class="btn sm ghost" data-act="golat" data-id="${id}">Latihan ${s.name}</button>`:`<a class="btn sm ghost" href="#evaluasi">Catat tryout</a>`}</div>
+  </div>
+  <div class="grid" style="align-content:start">
+    <div class="card" data-sub="${sub}">
+      <div class="hr-title"><h4>Alokasi waktu paket</h4><span class="note">${ph.hours} jam total</span></div>
+      <div class="split" role="img" aria-label="Pembagian waktu">${hrs.map(h=>`<div data-sub="${h[0]}" style="flex:${ph.alloc[h[0]]}">${ph.alloc[h[0]]}%</div>`).join('')}</div>
+      <div class="legend">${hrs.map(h=>`<span data-sub="${h[0]}"><i class="dot"></i>${SUB[h[0]].name} ${h[1].toFixed(1).replace('.',',')} jam</span>`).join('')}</div>
+      <p class="note mt-s">${id==='sim'?'Paket simulasi membagi waktu rata di ketiga subtes sambil membedah hasil tryout.':'Sebagian waktu tetap dipakai untuk mengulang subtes lain agar materi sebelumnya tidak lupa.'}</p>
+    </div>
+    <div class="card" data-sub="${sub}">
+      <h4 style="font-size:18px">Isi satu jam belajar</h4>
+      <div class="split">${id==='sim'?`<div style="flex:55">Latihan 33'</div><div style="flex:45">Bedah 27'</div>`:`<div style="flex:35">Materi 21'</div><div style="flex:45">Latihan 27'</div><div style="flex:20">Review 12'</div>`}</div>
+      <p class="note">${id==='sim'?'Belajar paling banyak terjadi saat membedah soal yang salah.':'Materi dibaca singkat, lalu langsung dilatih. Soal yang salah dicatat dan dibahas ulang.'}</p>
+    </div>
+    <div class="card" data-sub="${sub}"><h4 style="font-size:18px">Strategi paket ini</h4><ul class="tips">${STRAT[id].map(t=>'<li>'+esc(t)+'</li>').join('')}</ul></div>
+  </div>`;
+}
+
+/* ============ jadwal ============ */
+function renderSettings(){
+  const p=P();
+  const rate=k=>`<label class="field" for="rt-${k}"><span>Keyakinan awal ${SUB[k].name}: <b id="rv-${k}" class="mono">${p.rating[k]}</b> dari 5</span>
+    <input type="range" id="rt-${k}" min="1" max="5" step="1" value="${p.rating[k]}" data-set="rate-${k}" data-live="rv-${k}"></label>`;
+  $('#jdSettings').innerHTML=`<div class="set-grid">
+    <label class="field" for="stStart">Mulai belajar (hari Senin)<input type="date" id="stStart" data-set="start" value="${esc(p.start)}"></label>
+    <label class="field" for="stWeeks">Durasi program<select id="stWeeks" data-set="weeks">${[6,8,10,12].map(w=>`<option value="${w}" ${p.weeks===w?'selected':''}>${w} minggu</option>`).join('')}</select></label>
+    <label class="field" for="stHours"><span>Jam belajar per minggu: <b id="hv" class="mono">${p.hours}</b> jam</span>
+      <input type="range" id="stHours" min="10" max="30" step="1" value="${p.hours}" data-set="hours" data-live="hv"></label>
+    <div class="field"><span>Pengaturan lain</span><button type="button" class="btn sm ghost" data-act="resetdone">Reset centang jadwal</button></div>
+  </div>
+  <div class="rate">${['twk','tiu','tkp'].map(rate).join('')}</div>
+  <p class="note mt-s">Geser keyakinan awal ke kiri bila subtes itu terasa sulit. Subtes dengan nilai terendah mendapat tambahan 15 menit setiap Jumat.</p>`;
+}
+function renderJadwal(){
+  const p=P(),plan=buildPlan(p);
+  if(UI.week===null||UI.week>=plan.total)UI.week=curWeek(p,plan);
+  const start=pd(p.start);const sh=subHours(plan);const totalH=plan.total*p.hours;
+  const warn=((start.getDay()+6)%7)!==0?'<p class="note mt-s" style="color:var(--warn)">Tanggal mulai bukan hari Senin, jadi nama hari pada kartu dihitung dari urutan Senin sampai Minggu, bukan dari tanggal kalender.</p>':'';
+  const rows=plan.phases.map(ph=>{const sub=ph.id==='sim'?'mix':ph.id;
+    return `<tr class="phase-row" data-sub="${sub}"><td><span class="pill">${ph.label}</span> <b>${ph.sub}</b></td>
+    <td>Mgg ${ph.startW+1}${ph.nw>1?'–'+(ph.endW+1):''}<br><span class="note">${fmtD(addDays(start,ph.startW*7))} – ${fmtD(addDays(start,(ph.endW+1)*7-1))}</span></td>
+    <td class="mono">${ph.hours} jam</td>
+    <td><div class="stack" role="img" aria-label="Pembagian waktu paket">${['twk','tiu','tkp'].map(k=>`<i data-sub="${k}" style="background:var(--c);flex:${ph.alloc[k]}" title="${SUB[k].name} ${ph.alloc[k]}%"></i>`).join('')}</div>
+    <span class="note mono">${['twk','tiu','tkp'].map(k=>SUB[k].name+' '+ph.alloc[k]+'%').join(' · ')}</span></td></tr>`;}).join('');
+  const wks=plan.weeks.map(w=>{const sub=w.phase.id==='sim'?'mix':w.phase.id;
+    return `<button type="button" class="wk" data-sub="${sub}" data-act="week" data-i="${w.idx}" aria-pressed="${w.idx===UI.week}"><b>Minggu ${w.idx+1}</b><span>${w.phase.label} · ${w.phase.sub}</span></button>`;}).join('');
+  const W=plan.weeks[UI.week];const wStart=addDays(start,UI.week*7);const tdy=ymd(today0());
+  let wDone=0;W.days.forEach(d=>{if(p.done[d.key])wDone++;});
+  const days=W.days.map(d=>{const dt=addDays(wStart,d.d);const isT=ymd(dt)===tdy;const ck=!!p.done[d.key];
+    return `<article class="day ${isT?'today':''} ${ck?'done':''}" data-sub="${d.sub}">
+      <div class="dn"><b>${DAYN[d.d]}</b><span>${fmtD(dt)}</span></div>
+      <h4>${esc(d.title)}</h4><span class="mins">${hm(d.min)}</span>
+      <ul>${d.parts.map(x=>`<li><span>${x[0]}</span><span class="mono">${x[1]} m</span></li>`).join('')}</ul>
+      ${d.note?`<p class="nt">${esc(d.note)}</p>`:''}
+      <label class="chk"><input type="checkbox" data-chk="day" data-id="${d.key}" ${ck?'checked':''}>Selesai</label></article>`;}).join('');
+  $('#jdOut').innerHTML=`
+  <div class="grid g2 mt">
+    <div class="card"><h3 style="font-size:20px">Ringkasan program</h3>
+      <p class="note mt-s">${plan.total} minggu · ${fmtD(start,{day:'numeric',month:'long',year:'numeric'})} sampai ${fmtD(addDays(start,plan.total*7-1),{day:'numeric',month:'long',year:'numeric'})}</p>
+      <p class="mt-s"><b class="mono" style="font-size:28px">${totalH}</b> jam belajar seluruhnya</p>${warn}</div>
+    <div class="card"><h3 style="font-size:20px">Total jam per subtes</h3>
+      <div class="split" role="img" aria-label="Total jam per subtes">${['twk','tiu','tkp'].map(k=>`<div data-sub="${k}" style="flex:${sh[k]}">${Math.round(sh[k])} j</div>`).join('')}</div>
+      <div class="legend">${['twk','tiu','tkp'].map(k=>`<span data-sub="${k}"><i class="dot"></i>${SUB[k].full}: ${Math.round(sh[k])} jam (${Math.round(sh[k]/totalH*100)}%)</span>`).join('')}</div></div>
+  </div>
+  <div class="card mt-s" style="margin-top:16px"><div class="scroll-x"><table><thead><tr><th>Paket</th><th>Waktu</th><th>Jam</th><th>Alokasi per subtes</th></tr></thead><tbody>${rows}</tbody></table></div></div>
+  <div class="mt"><div class="hr-title"><h3 style="font-size:24px">Jadwal mingguan</h3><span class="pill">${wDone}/7 hari selesai</span></div>
+    <div class="weeks" role="group" aria-label="Pilih minggu">${wks}</div>
+    <div class="days mt-s">${days}</div></div>`;
+}
+
+/* ============ materi + flashcard ============ */
+function renderMateri(){
+  $$('#matTabs .tab').forEach(b=>b.setAttribute('aria-selected',b.dataset.id===UI.mat));
+  const k=UI.mat;
+  $('#matBody').innerHTML=MATERI[k].map((m,i)=>`<details class="mt-d" data-sub="${k}" ${i===0?'open':''}><summary>${esc(m[0])}</summary><div class="body"><ul>${m[1].map(x=>'<li>'+x+'</li>').join('')}</ul></div></details>`).join('');
+}
+function resetQueue(){const p=P();UI.queue=[];CARDS[UI.deck].forEach((c,i)=>{if(!p.cards[UI.deck+'-'+i])UI.queue.push(i);});UI.flip=false;}
+function renderFlash(){
+  const p=P();const k=UI.deck;
+  $$('#deckChips .chip').forEach(b=>b.setAttribute('aria-pressed',b.dataset.id===k));
+  const total=CARDS[k].length;const known=total-UI.queue.length;
+  const el=$('#flashArea');el.dataset.sub=k;
+  if(!UI.queue.length){
+    el.innerHTML=`<div class="card"><h4 style="font-size:20px">Semua kartu ${SUB[k].name} sudah hafal</h4><p class="note mt-s">Ulangi seminggu lagi untuk menjaga ingatan.</p><div class="cta"><button type="button" class="btn sm" data-act="deckreset">Mulai ulang dek</button></div></div>`;return;
+  }
+  const c=CARDS[k][UI.queue[0]];
+  el.innerHTML=`<div class="flash"><button type="button" class="face" data-act="flip" aria-label="Balik kartu"><span class="side">${UI.flip?'Jawaban':'Pertanyaan'} · ${SUB[k].name}</span><span class="txt">${esc(UI.flip?c[1]:c[0])}</span><span class="hint">${UI.flip?'Apakah jawabanmu sudah sama?':'Ketuk untuk melihat jawaban'}</span></button></div>
+  <div class="fc-actions"><button type="button" class="btn" data-act="known" ${UI.flip?'':'disabled'}>Sudah hafal</button><button type="button" class="btn ghost" data-act="repeat" ${UI.flip?'':'disabled'}>Ulangi nanti</button><span class="note" style="align-self:center">${known} dari ${total} hafal</span></div>`;
+}
+
+/* ============ latihan ============ */
+function renderQuiz(){
+  const p=P();const Q=UI.Q;const box=$('#quizArea');
+  if(!Q){
+    const hist=k=>{const q=p.quiz[k];return q?Math.round(q.pts/q.max*100)+'% akurat · '+q.runs+' sesi':'belum dicoba';};
+    box.innerHTML=`<div class="pick-grid">
+      ${['twk','tiu','tkp'].map(k=>`<button type="button" data-act="qstart" data-id="${k}" data-sub="${k}"><b>${SUB[k].name}</b><span>${QUIZ.filter(q=>q.s===k).length} soal · ${hist(k)}</span></button>`).join('')}
+      <button type="button" data-act="qstart" data-id="all" data-sub="mix"><b>Campuran</b><span>${QUIZ.length} soal, urutan acak</span></button></div>`;
+    return;
+  }
+  if(Q.done){
+    let pts=0,max=0;const by={};
+    Q.items.forEach((it,i)=>{const a=Q.ans[i];const sc=it.s==='tkp'?it.opts[a].v:(it.opts[a].ok?5:0);pts+=sc;max+=5;const b=by[it.s]||(by[it.s]={pts:0,max:0,n:0});b.pts+=sc;b.max+=5;b.n++;});
+    const proj=Object.keys(by).map(k=>{const s=SUB[k];const pr=Math.round(by[k].pts/by[k].max*s.max);return `<div class="vd ${pr>=s.pg?'pass':'fail'}" data-sub="${k}"><span class="pill">${s.name}</span><b>${by[k].pts}/${by[k].max}</b><span class="st">Proyeksi ${pr}/${s.max} · batas ${s.pg} · ${pr>=s.pg?'di atas batas':'di bawah batas'}</span></div>`;}).join('');
+    box.innerHTML=`<div class="card q-card"><div class="eyebrow">Hasil latihan</div><div class="res-big">${Math.round(pts/max*100)}%</div>
+      <p class="note mt-s">${pts} dari ${max} poin. Proyeksi memperkirakan skor ujian penuh bila akurasi sama, jadi anggap angkanya kasar karena jumlah soal sedikit.</p>
+      <div class="verdict" style="grid-template-columns:repeat(auto-fit,minmax(180px,1fr))">${proj}</div>
+      <div class="cta"><button type="button" class="btn" data-act="qagain">Latihan lagi</button><button type="button" class="btn ghost" data-act="qexit">Pilih subtes lain</button></div></div>`;
+    return;
+  }
+  const it=Q.items[Q.i];const a=Q.ans[Q.i];const answered=a!==undefined;
+  const L='ABCDE';const sub=it.s;
+  const opts=it.opts.map((o,i)=>{
+    let cls='opt';if(answered){if(sub==='tkp'){if(o.v===5)cls+=' ok';else if(i===a)cls+=' no';}else{if(o.ok)cls+=' ok';else if(i===a)cls+=' no';}if(i===a)cls+=' pick';}
+    return `<button type="button" class="${cls}" data-act="qpick" data-i="${i}" ${answered?'disabled':''}><span class="bub">${L[i]}</span><span>${esc(o.t)}</span>${answered&&sub==='tkp'?`<span class="sc">skor ${o.v}</span>`:''}</button>`;}).join('');
+  let fb='';
+  if(answered){const got=sub==='tkp'?it.opts[a].v:(it.opts[a].ok?5:0);
+    fb=`<div class="explain"><b>${sub==='tkp'?'Skor Anda '+got+' dari 5.':(got?'Benar.':'Belum tepat.')}</b> ${esc(it.e)}</div>
+    <div class="cta"><button type="button" class="btn" data-act="qnext">${Q.i===Q.items.length-1?'Lihat hasil':'Soal berikutnya'}</button></div>`;}
+  box.innerHTML=`<div class="card q-card" data-sub="${sub}"><div class="q-meta"><span class="pill">${SUB[sub].name}${it.a?' · '+esc(it.a):''}</span><span class="mono note">Soal ${Q.i+1} dari ${Q.items.length}</span></div>
+    <div class="meter" style="margin-bottom:16px"><i style="width:${(Q.i+(answered?1:0))/Q.items.length*100}%"></i></div>
+    <p class="q-text">${esc(it.q)}</p><div class="opts">${opts}</div>${fb}</div>`;
+}
+function qStart(id){
+  let list=QUIZ.filter(q=>id==='all'||q.s===id);list=shuffle(list);
+  const items=list.map(q=>{
+    if(q.s==='tkp'){return {s:q.s,a:q.a,q:q.q,e:q.e,opts:shuffle(q.o.map(o=>({v:o[0],t:o[1]})))};}
+    return {s:q.s,q:q.q,e:q.e,opts:shuffle(q.o.map((t,i)=>({t:t,ok:i===0})))};
+  });
+  UI.Q={id:id,items:items,i:0,ans:[],done:false};renderQuiz();
+}
+function qFinish(){
+  const p=P();const Q=UI.Q;
+  Q.items.forEach((it,i)=>{const a=Q.ans[i];const sc=it.s==='tkp'?it.opts[a].v:(it.opts[a].ok?5:0);
+    const r=p.quiz[it.s]||(p.quiz[it.s]={pts:0,max:0,runs:0,cnt:0});r.pts+=sc;r.max+=5;r.cnt++;});
+  const seen={};Q.items.forEach(it=>{seen[it.s]=1;});Object.keys(seen).forEach(k=>{p.quiz[k].runs++;});
+  save();Q.done=true;renderQuiz();renderDash();
+}
+
+/* ============ timer & log ============ */
+const T={sub:'twk',focus:25,brk:5,isBreak:false,state:'idle',left:25*60,total:25*60,end:0,h:null};
+const CIRC=2*Math.PI*96;
+function fmtT(s){return pad(Math.floor(s/60))+':'+pad(s%60);}
+function renderTimer(){
+  const box=$('#timerBox');box.dataset.sub=T.sub;
+  const off=CIRC*(1-(T.total-T.left)/T.total);
+  const pre=[[25,5],[45,10],[50,10]];
+  const run=T.state==='run';
+  box.innerHTML=`<div class="chips" role="group" aria-label="Subtes">${['twk','tiu','tkp','mix'].map(k=>`<button type="button" class="chip" data-sub="${k}" data-act="tsub" data-id="${k}" aria-pressed="${T.sub===k}" ${T.state!=='idle'?'disabled':''}>${k==='mix'?'Campuran':SUB[k].name}</button>`).join('')}</div>
+  <div class="ring"><svg viewBox="0 0 220 220" aria-hidden="true"><circle class="bg" cx="110" cy="110" r="96"/><circle class="fg" id="ringFg" cx="110" cy="110" r="96" stroke-dasharray="${CIRC}" stroke-dashoffset="${off}"/></svg>
+    <div class="t"><b id="tTime">${fmtT(T.left)}</b><span>${T.isBreak?'Istirahat':'Fokus'}</span></div></div>
+  <div class="chips" role="group" aria-label="Pola waktu">${pre.map(x=>`<button type="button" class="chip" data-act="tpre" data-f="${x[0]}" data-b="${x[1]}" aria-pressed="${T.focus===x[0]}" ${T.state!=='idle'?'disabled':''}>${x[0]} / ${x[1]} menit</button>`).join('')}</div>
+  <div class="cta" style="margin-top:0">
+    ${run?`<button type="button" class="btn" data-act="tpause">Jeda</button>`:`<button type="button" class="btn" data-act="tstart">${T.state==='pause'?'Lanjut':'Mulai'}</button>`}
+    ${(!T.isBreak&&T.state!=='idle')?`<button type="button" class="btn ghost" data-act="tfinish">Selesai dan catat</button>`:''}
+    ${T.state!=='idle'||T.isBreak?`<button type="button" class="btn ghost" data-act="treset">Reset</button>`:''}</div>`;
+}
+function tickUI(){const t=$('#tTime');if(t)t.textContent=fmtT(T.left);const r=$('#ringFg');if(r)r.style.strokeDashoffset=CIRC*(1-(T.total-T.left)/T.total);document.title=T.state==='run'?fmtT(T.left)+' · Jalur Belajar SKD CPNS':'Jalur Belajar SKD CPNS';}
+function addLog(sub,min,msg){
+  if(min<1)return;const p=P();p.log.push({date:ymd(new Date()),sub:sub,min:Math.round(min)});save();renderLog();renderDash();toast(msg||('Tercatat '+Math.round(min)+' menit'));
+}
+function tstart(){
+  if(T.state==='run')return;T.end=Date.now()+T.left*1000;T.state='run';clearInterval(T.h);
+  T.h=setInterval(()=>{
+    T.left=Math.max(0,Math.ceil((T.end-Date.now())/1000));
+    if(T.left<=0){clearInterval(T.h);T.state='idle';
+      if(!T.isBreak){addLog(T.sub,T.total/60,'Sesi fokus selesai. Tercatat '+Math.round(T.total/60)+' menit.');T.isBreak=true;T.total=T.left=T.brk*60;}
+      else{T.isBreak=false;T.total=T.left=T.focus*60;toast('Istirahat selesai, siap fokus lagi.');}
+      renderTimer();tickUI();return;}
+    tickUI();},250);
+  renderTimer();tickUI();
+}
+function tpause(){clearInterval(T.h);T.left=Math.max(0,Math.ceil((T.end-Date.now())/1000));T.state='pause';renderTimer();tickUI();}
+function treset(){clearInterval(T.h);T.state='idle';T.isBreak=false;T.total=T.left=T.focus*60;renderTimer();tickUI();}
+function tfinish(){clearInterval(T.h);const done=T.state==='run'?Math.max(0,Math.ceil((T.end-Date.now())/1000)):T.left;const el=Math.floor((T.total-done)/60);
+  T.state='idle';T.total=T.left=T.focus*60;T.isBreak=false;
+  if(el>=1)addLog(T.sub,el);else toast('Belum ada satu menit penuh yang berjalan.');renderTimer();tickUI();}
+function renderLog(){
+  const p=P();const wm=weekMinutes(p);const tgt=p.hours*60;
+  const recent=p.log.map((l,i)=>[l,i]).slice(-6).reverse();
+  $('#logBox').innerHTML=`<h3 style="font-size:20px">Belajar pekan ini</h3>
+    <p class="mt-s"><b class="mono" style="font-size:30px">${(wm.sum/60).toFixed(1).replace('.',',')}</b> <span class="note">dari target ${p.hours} jam</span></p>
+    <div class="split" style="margin:10px 0" role="img" aria-label="Menit per subtes pekan ini">${['twk','tiu','tkp','mix'].map(k=>wm[k]?`<div data-sub="${k}" style="flex:${wm[k]}">${wm[k]}'</div>`:'').join('')||'<div style="flex:1;background:var(--surface-2);color:var(--ink-2)">belum ada</div>'}</div>
+    <div class="meter"><i style="width:${Math.min(100,wm.sum/tgt*100)}%"></i></div>
+    <h4 style="font-size:16px;margin-top:18px">Catat manual</h4>
+    <div class="set-grid" style="grid-template-columns:1fr 1fr auto;align-items:end;margin-top:8px">
+      <label class="field" for="mlSub">Subtes<select id="mlSub"><option value="twk">TWK</option><option value="tiu">TIU</option><option value="tkp">TKP</option><option value="mix">Campuran</option></select></label>
+      <label class="field" for="mlMin">Menit<input type="number" id="mlMin" min="1" max="600" value="30"></label>
+      <button type="button" class="btn sm" data-act="mladd">Tambah</button></div>
+    <h4 style="font-size:16px;margin-top:18px">Catatan terakhir</h4>
+    ${recent.length?recent.map(r=>`<div class="log-row" data-sub="${r[0].sub}"><span><span class="dot"></span> ${r[0].sub==='mix'?'Campuran':SUB[r[0].sub].name} · ${fmtD(pd(r[0].date))}</span><span><b class="mono">${r[0].min} m</b><button type="button" class="x" data-act="logdel" data-i="${r[1]}" aria-label="Hapus catatan">×</button></span></div>`).join(''):'<p class="note">Belum ada catatan. Jalankan timer untuk mulai.</p>'}`;
+}
+
+/* ============ evaluasi ============ */
+let calcDraft={twk:'',tiu:'',tkp:''};
+function verdictHTML(tw,ti,tk){
+  const arr=[['twk',tw,SUB.twk],['tiu',ti,SUB.tiu],['tkp',tk,SUB.tkp]];
+  const tot=tw+ti+tk;
+  return arr.map(a=>{const ok=a[1]>=a[2].pg;return `<div class="vd ${ok?'pass':'fail'}" data-sub="${a[0]}"><span class="pill">${a[2].name}</span><b>${a[1]}</b><span class="st">${ok?'Lolos':'Kurang '+(a[2].pg-a[1])} · batas ${a[2].pg} · maks ${a[2].max}</span></div>`;}).join('')+
+    `<div class="vd ${arr.every(a=>a[1]>=a[2].pg)?'pass':'fail'}" style="grid-column:1/-1"><span class="pill">Total</span><b>${tot} / 550</b><span class="st">${arr.every(a=>a[1]>=a[2].pg)?'Semua subtes di atas ambang batas':'Belum semua subtes mencapai ambang batas'}</span></div>`;
+}
+function renderCalc(){
+  const p=P();
+  $('#calcBox').innerHTML=`<h3 style="font-size:20px">Catat hasil tryout</h3>
+  <div class="calc mt-s">
+    <label class="field" for="cdDate">Tanggal<input type="date" id="cdDate" value="${ymd(new Date())}"></label>
+    <label class="field" for="cdTwk">TWK: soal benar (0 sampai 30)<input type="number" id="cdTwk" min="0" max="30" value="${esc(calcDraft.twk)}" data-calc="1"></label>
+    <label class="field" for="cdTiu">TIU: soal benar (0 sampai 35)<input type="number" id="cdTiu" min="0" max="35" value="${esc(calcDraft.tiu)}" data-calc="1"></label>
+    <label class="field" for="cdTkp">TKP: total skor (45 sampai 225)<input type="number" id="cdTkp" min="45" max="225" value="${esc(calcDraft.tkp)}" data-calc="1"></label></div>
+  <div class="verdict" id="calcVerdict"></div>
+  <div class="cta"><button type="button" class="btn" data-act="toadd">Simpan tryout</button></div>`;
+  updCalc();
+  const list=p.tryouts.map((t,i)=>[t,i]).reverse();
+  $('#chartBox').innerHTML=p.tryouts.length?`<div class="charts">${['twk','tiu','tkp'].map(k=>chartCard(k,p.tryouts)).join('')}</div>
+    <div class="card mt-s" style="margin-top:16px"><h3 style="font-size:18px">Riwayat tryout</h3><div class="scroll-x"><table><thead><tr><th>Tanggal</th><th>TWK</th><th>TIU</th><th>TKP</th><th>Total</th><th></th></tr></thead><tbody>${list.map(r=>{const t=r[0];const a=t.twk*5,b=t.tiu*5,c=t.tkp;return `<tr><td>${fmtD(pd(t.date),{day:'numeric',month:'short',year:'numeric'})}</td><td class="mono" style="color:${a>=65?'var(--good)':'var(--bad)'}">${a}</td><td class="mono" style="color:${b>=80?'var(--good)':'var(--bad)'}">${b}</td><td class="mono" style="color:${c>=166?'var(--good)':'var(--bad)'}">${c}</td><td class="mono">${a+b+c}</td><td><button type="button" class="x" data-act="todel" data-i="${r[1]}" aria-label="Hapus tryout">×</button></td></tr>`;}).join('')}</tbody></table></div></div>`
+    :`<div class="card"><p class="note">Belum ada tryout tersimpan. Setelah tryout pertama, grafik perkembangan tiap subtes akan muncul di sini.</p></div>`;
+}
+function readCalc(){const g=id=>{const v=parseInt($(id).value,10);return isNaN(v)?null:v;};return {tw:g('#cdTwk'),ti:g('#cdTiu'),tk:g('#cdTkp')};}
+function updCalc(){
+  const r=readCalc();const box=$('#calcVerdict');
+  if(r.tw===null||r.ti===null||r.tk===null){box.innerHTML='<p class="note" style="grid-column:1/-1">Isi ketiga kolom untuk melihat perbandingan dengan ambang batas.</p>';return;}
+  box.innerHTML=verdictHTML(r.tw*5,r.ti*5,r.tk);
+}
+function chartCard(k,list){
+  const s=SUB[k];const vals=list.map(t=>k==='tkp'?t.tkp:t[k]*5);
+  const W=260,H=120,pl=10,pr=10,pt=14,pb=14;const n=vals.length;
+  const x=i=>n<2?W/2:pl+i*(W-pl-pr)/(n-1);const y=v=>pt+(H-pt-pb)*(1-v/s.max);
+  const pts=vals.map((v,i)=>x(i)+','+y(v)).join(' ');
+  const last=vals[n-1];const ok=last>=s.pg;
+  return `<div class="card" data-sub="${k}"><div class="hr-title"><span class="pill">${s.name}</span><span class="mono" style="color:${ok?'var(--good)':'var(--bad)'};font-weight:600">${last} / ${s.max}</span></div>
+  <svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Grafik skor ${s.name}: terakhir ${last}, batas ${s.pg}">
+    <line x1="${pl}" x2="${W-pr}" y1="${y(0)}" y2="${y(0)}" style="stroke:var(--line)"/>
+    <line x1="${pl}" x2="${W-pr}" y1="${y(s.pg)}" y2="${y(s.pg)}" stroke-dasharray="4 4" style="stroke:var(--ink-2)"/>
+    <text x="${W-pr}" y="${y(s.pg)-4}" text-anchor="end" font-size="10" style="fill:var(--ink-2);font-family:var(--f-mono)">batas ${s.pg}</text>
+    ${n>1?`<polyline points="${pts}" fill="none" stroke-width="2.5" style="stroke:var(--c)"/>`:''}
+    ${vals.map((v,i)=>`<circle cx="${x(i)}" cy="${y(v)}" r="${i===n-1?5:3.5}" style="fill:var(--c)"/>`).join('')}
+  </svg><p class="note">${n} tryout${n>1?' · selisih terakhir '+(last-vals[n-2]>=0?'+':'')+(last-vals[n-2]):''}</p></div>`;
+}
+
+/* ============ render all ============ */
+function renderAll(){renderHero();renderDash();renderPaket();renderSettings();renderJadwal();renderMateri();resetQueue();renderFlash();UI.Q=null;renderQuiz();renderLog();renderCalc();}
+
+/* ============ events ============ */
+document.addEventListener('click',e=>{
+  const el=e.target.closest('[data-act]');if(!el)return;const a=el.dataset.act;const p=P();
+  switch(a){
+    case 'profile':if(DB.profile!==el.dataset.id){DB.profile=el.dataset.id;save();UI.week=null;renderAll();toast('Profil: '+PROFILES[DB.profile]);}break;
+    case 'pkg':UI.pkg=el.dataset.id;renderPaket();break;
+    case 'gowk':UI.week=+el.dataset.i;renderJadwal();$('#jadwal').scrollIntoView();break;
+    case 'golat':$('#latihan').scrollIntoView();qStart(el.dataset.id);break;
+    case 'week':UI.week=+el.dataset.i;renderJadwal();break;
+    case 'resetdone':p.done={};save();renderJadwal();renderDash();toast('Centang jadwal direset');break;
+    case 'mat':UI.mat=el.dataset.id;renderMateri();break;
+    case 'deck':UI.deck=el.dataset.id;resetQueue();renderFlash();break;
+    case 'flip':UI.flip=!UI.flip;renderFlash();break;
+    case 'known':{const i=UI.queue.shift();p.cards[UI.deck+'-'+i]=true;UI.flip=false;save();renderFlash();renderDash();break;}
+    case 'repeat':{const i=UI.queue.shift();UI.queue.push(i);UI.flip=false;renderFlash();break;}
+    case 'deckreset':CARDS[UI.deck].forEach((c,i)=>{delete p.cards[UI.deck+'-'+i];});save();resetQueue();renderFlash();renderDash();break;
+    case 'qstart':qStart(el.dataset.id);break;
+    case 'qpick':{const Q=UI.Q;if(Q.ans[Q.i]===undefined){Q.ans[Q.i]=+el.dataset.i;renderQuiz();}break;}
+    case 'qnext':{const Q=UI.Q;if(Q.i===Q.items.length-1)qFinish();else{Q.i++;renderQuiz();$('#quizArea').scrollIntoView({block:'nearest'});}break;}
+    case 'qagain':qStart(UI.Q.id);break;
+    case 'qexit':UI.Q=null;renderQuiz();break;
+    case 'tsub':T.sub=el.dataset.id;renderTimer();break;
+    case 'tpre':T.focus=+el.dataset.f;T.brk=+el.dataset.b;T.total=T.left=T.focus*60;T.isBreak=false;renderTimer();break;
+    case 'tstart':tstart();break;
+    case 'tpause':tpause();break;
+    case 'treset':treset();break;
+    case 'tfinish':tfinish();break;
+    case 'mladd':{const m=parseInt($('#mlMin').value,10);if(!m||m<1){toast('Isi menit belajar lebih dari 0');break;}addLog($('#mlSub').value,Math.min(m,600));break;}
+    case 'logdel':p.log.splice(+el.dataset.i,1);save();renderLog();renderDash();break;
+    case 'toadd':{const r=readCalc();
+      if(r.tw===null||r.ti===null||r.tk===null){toast('Isi ketiga kolom dulu');break;}
+      if(r.tw<0||r.tw>30||r.ti<0||r.ti>35||r.tk<45||r.tk>225){toast('Periksa rentang angka: TWK 0-30, TIU 0-35, TKP 45-225');break;}
+      p.tryouts.push({date:$('#cdDate').value||ymd(new Date()),twk:r.tw,tiu:r.ti,tkp:r.tk});
+      p.tryouts.sort((x,y)=>x.date<y.date?-1:x.date>y.date?1:0);
+      calcDraft={twk:'',tiu:'',tkp:''};save();renderCalc();renderDash();toast('Tryout tersimpan');break;}
+    case 'todel':p.tryouts.splice(+el.dataset.i,1);save();renderCalc();renderDash();break;
+  }
+});
+document.addEventListener('change',e=>{
+  const t=e.target;const p=P();
+  if(t.dataset.chk==='day'){if(t.checked)p.done[t.dataset.id]=true;else delete p.done[t.dataset.id];save();renderJadwal();renderDash();return;}
+  if(t.dataset.chk==='topic'){if(t.checked)p.topics[t.dataset.id]=true;else delete p.topics[t.dataset.id];save();renderPaket();renderDash();return;}
+  const s=t.dataset.set;if(!s)return;
+  if(s==='exam'){p.exam=t.value;save();renderHero();return;}
+  if(s==='start'){if(t.value){p.start=t.value;save();UI.week=null;renderJadwal();renderHero();renderPaket();}return;}
+  if(s==='weeks'){p.weeks=+t.value;save();UI.week=null;renderJadwal();renderHero();renderPaket();renderDash();return;}
+  if(s==='hours'){p.hours=+t.value;save();renderJadwal();renderPaket();renderLog();renderDash();return;}
+  if(s.indexOf('rate-')===0){p.rating[s.slice(5)]=+t.value;save();renderJadwal();return;}
+});
+document.addEventListener('input',e=>{
+  const t=e.target;
+  if(t.dataset.live){const o=document.getElementById(t.dataset.live);if(o)o.textContent=t.value;}
+  if(t.dataset.calc){calcDraft={twk:$('#cdTwk').value,tiu:$('#cdTiu').value,tkp:$('#cdTkp').value};updCalc();}
+});
+
+/* nav highlight */
+(function(){
+  const links=$$('.nav a');const secs=links.map(a=>document.querySelector(a.getAttribute('href')));
+  function upd(){let cur=-1;const y=window.scrollY+160;secs.forEach((s,i)=>{if(s&&s.offsetTop<=y)cur=i;});links.forEach((a,i)=>a.setAttribute('aria-current',i===cur?'true':'false'));}
+  window.addEventListener('scroll',upd,{passive:true});upd();
+})();
+
+renderStatic();renderAll();renderTimer();
+})();
+</script>
+</body>
+</html>
