@@ -161,6 +161,15 @@ input:focus,select:focus{border-color:var(--blue);outline:0}
 .verd{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
 .tl{display:grid;gap:8px;margin-top:12px}.tl div{display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;background:var(--sky);border-radius:13px;padding:9px 13px;font-size:14px}
 .chart{width:100%;height:auto;margin-top:12px}
+/* musik */
+.mus{position:fixed;left:14px;bottom:14px;z-index:60;display:flex;align-items:center;gap:0;background:var(--navy);border:2px solid var(--yel);border-radius:99px;box-shadow:0 8px 22px rgba(8,42,115,.35);padding:3px}
+.mus button{width:44px;height:44px;border-radius:50%;border:0;background:var(--yel);color:var(--navy);display:grid;place-items:center;flex:none}
+.mus button:hover{transform:scale(1.06)}
+.mus .mv{display:none;padding:0 12px 0 10px}.mus.on .mv{display:block}
+.mus input[type=range]{width:84px;padding:0;border:0;background:transparent;accent-color:var(--yel);vertical-align:middle}
+.mus.wait button{animation:pulse 1.6s infinite}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(255,201,40,.7)}100%{box-shadow:0 0 0 14px rgba(255,201,40,0)}}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
 /* faq */
 details.fq{background:#fff;border:1px solid var(--line);border-radius:16px;padding:0 16px;margin-bottom:9px}
 details.fq summary{cursor:pointer;font-weight:700;padding:14px 0;list-style:none;display:flex;justify-content:space-between;gap:10px}
@@ -168,7 +177,7 @@ details.fq summary::after{content:"+";font-size:22px;color:var(--blue);line-heig
 details.fq[open] summary::after{content:"–"}
 details.fq p{margin:0 0 14px;color:#34456f}
 footer{background:var(--navy);color:#cfe0ff;padding:34px 0;font-size:14px}footer a{color:var(--yel)}
-.toast{position:fixed;left:50%;bottom:22px;transform:translate(-50%,30px);background:var(--navy);color:#fff;padding:11px 18px;border-radius:14px;font-weight:600;opacity:0;pointer-events:none;transition:.3s;z-index:99;max-width:90vw;text-align:center}
+.toast{position:fixed;left:50%;bottom:78px;transform:translate(-50%,30px);background:var(--navy);color:#fff;padding:11px 18px;border-radius:14px;font-weight:600;opacity:0;pointer-events:none;transition:.3s;z-index:99;max-width:90vw;text-align:center}
 .toast.show{opacity:1;transform:translate(-50%,0)}
 .confetti{position:fixed;top:-10px;width:10px;height:14px;z-index:98;pointer-events:none;animation:fall 1.6s ease-in forwards}
 @keyframes fall{to{transform:translateY(105vh) rotate(540deg);opacity:.9}}
@@ -296,6 +305,7 @@ footer{background:var(--navy);color:#cfe0ff;padding:34px 0;font-size:14px}footer
   <p><b style="color:#fff">Jalur PNS</b> dibuat untuk Joshua &amp; Bagas Wiratama. Semangat, kalian pasti bisa. 💛</p>
   <p>Info resmi pendaftaran CPNS hanya di <a href="https://sscasn.bkn.go.id" target="_blank" rel="noopener">sscasn.bkn.go.id</a>. Jadwal, formasi, dan passing grade bisa berubah tiap tahun, selalu cek pengumuman terbaru. Situs ini bukan situs resmi BKN/Kemenpan RB. Soal latihan ditulis ulang untuk belajar dan tidak sama dengan soal asli ujian.</p>
 </div></footer>
+<div id="mus" class="mus"><button id="musBtn" type="button" aria-label="Nyalakan musik semangat"></button><label class="mv"><span class="sr">Volume musik</span><input type="range" id="musVol" min="0" max="100" value="40"></label></div>
 <div class="toast" id="toast" role="status"></div>
 <input type="file" id="impFile" accept="application/json,.json" hidden>
 <script>
@@ -968,6 +978,94 @@ function init(){
 }
 document.addEventListener('DOMContentLoaded',init);
 if(document.readyState!=='loading'){try{init()}catch(e){console.error(e)}}
+
+/* ================= musik semangat (dibuat langsung oleh browser) ================= */
+(function(){
+  const box=$('#mus'),btn=$('#musBtn'),vol=$('#musVol');
+  let ctx=null,master=null,noise=null,timer=null,step=0,nextT=0,playing=false,wantOn=true,started=false;
+  const BPM=100,S16=60/BPM/4;
+  const CH=[[60,64,67,72],[59,62,67,71],[57,60,64,69],[57,60,65,69]];
+  const BASS=[36,43,45,41];
+  const ARP=[0,1,2,3,2,1,2,3,0,1,2,3,2,1,2,1];
+  const MEL=[{0:76,4:79,6:76,8:74,10:76,12:79},{0:74,4:71,6:74,8:79,12:74},{0:72,4:76,6:72,8:71,10:72,12:76},{0:72,4:77,6:76,8:74,10:72,12:69,14:72}];
+  const hz=m=>440*Math.pow(2,(m-69)/12);
+  function tone(type,f,t,dur,v,att){
+    const o=ctx.createOscillator(),g=ctx.createGain();o.type=type;o.frequency.value=f;
+    g.gain.setValueAtTime(0.0001,t);g.gain.linearRampToValueAtTime(v,t+(att||.01));g.gain.exponentialRampToValueAtTime(0.0001,t+dur);
+    o.connect(g);g.connect(master);o.start(t);o.stop(t+dur+.05);
+  }
+  function hat(t,v){
+    const s=ctx.createBufferSource();s.buffer=noise;const f=ctx.createBiquadFilter();f.type='highpass';f.frequency.value=7000;
+    const g=ctx.createGain();g.gain.setValueAtTime(v,t);g.gain.exponentialRampToValueAtTime(0.0001,t+.05);
+    s.connect(f);f.connect(g);g.connect(master);s.start(t);s.stop(t+.07);
+  }
+  function kick(t){
+    const o=ctx.createOscillator(),g=ctx.createGain();o.type='sine';
+    o.frequency.setValueAtTime(140,t);o.frequency.exponentialRampToValueAtTime(45,t+.12);
+    g.gain.setValueAtTime(.5,t);g.gain.exponentialRampToValueAtTime(0.0001,t+.22);
+    o.connect(g);g.connect(master);o.start(t);o.stop(t+.25);
+  }
+  function sched(i,t){
+    const bar=Math.floor(i/16)%4,s=i%16,ch=CH[bar];
+    tone('triangle',hz(ch[ARP[s]]),t,S16*1.6,.11,.005);
+    if(s===0||s===6||s===8||s===14)tone('sine',hz(BASS[bar]),t,S16*(s===0||s===8?5:3),.28,.01);
+    if(s===0)ch.slice(0,3).forEach(n=>tone('sine',hz(n-12),t,S16*15,.035,.4));
+    const m=MEL[bar][s];if(m)tone('square',hz(m),t,S16*3,.045,.01);
+    if(s===0||s===8)kick(t);
+    if(s%2===0)hat(t,s%4===0?.06:.03);
+  }
+  function tick(){
+    while(nextT<ctx.currentTime+.2){sched(step,nextT);nextT+=S16;step++}
+  }
+  function setVol(){if(master)master.gain.setTargetAtTime(+vol.value/100*.7,ctx.currentTime,.05)}
+  function ui(){
+    box.classList.toggle('on',playing);box.classList.toggle('wait',wantOn&&!playing);
+    btn.setAttribute('aria-pressed',String(playing));
+    btn.setAttribute('aria-label',playing?'Matikan musik (mute)':'Nyalakan musik semangat');
+    btn.title=playing?'Mute musik':'Nyalakan musik';
+    btn.innerHTML=playing
+      ?'<svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3v6h3l5 4z" fill="currentColor"/><path d="M15.5 8.5a5 5 0 0 1 0 7M18.5 5.5a9 9 0 0 1 0 13"/></svg>'
+      :'<svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3v6h3l5 4z" fill="currentColor"/><path d="m16 9 6 6M22 9l-6 6"/></svg>';
+  }
+  function start(){
+    try{
+      const AC=window.AudioContext||window.webkitAudioContext;if(!AC){toast('Browser ini belum mendukung musik');return}
+      if(!ctx){
+        ctx=new AC();master=ctx.createGain();master.gain.value=0;
+        const comp=ctx.createDynamicsCompressor();master.connect(comp);comp.connect(ctx.destination);
+        noise=ctx.createBuffer(1,ctx.sampleRate*.2,ctx.sampleRate);const d=noise.getChannelData(0);for(let i=0;i<d.length;i++)d[i]=Math.random()*2-1;
+      }
+      if(ctx.state==='suspended')ctx.resume();
+      step=0;nextT=ctx.currentTime+.1;clearInterval(timer);timer=setInterval(tick,40);
+      playing=true;wantOn=true;started=true;setVol();ui();
+    }catch(e){playing=false;ui()}
+  }
+  function stop(){
+    clearInterval(timer);playing=false;
+    if(master&&ctx){master.gain.setTargetAtTime(0,ctx.currentTime,.05);setTimeout(()=>{if(!playing&&ctx&&ctx.state==='running')ctx.suspend()},300)}
+    ui();
+  }
+  function pref(){try{return JSON.parse(localStorage.getItem('jalurpns-music'))||{}}catch(e){return{}}}
+  function savePref(){try{localStorage.setItem('jalurpns-music',JSON.stringify({on:wantOn,v:+vol.value}))}catch(e){}}
+  const pf=pref();if(typeof pf.v==='number')vol.value=pf.v;if(pf.on===false)wantOn=false;
+  btn.addEventListener('click',()=>{
+    if(playing){wantOn=false;stop();toast('Musik dimatikan')}else{wantOn=true;start();toast('Musik semangat nyala 🎵')}
+    savePref();
+  });
+  vol.addEventListener('input',()=>{setVol();savePref()});
+  function firstGesture(e){
+    if(box.contains(e.target))return;
+    document.removeEventListener('pointerdown',firstGesture,true);document.removeEventListener('keydown',firstGesture,true);
+    if(wantOn&&!started)start();
+  }
+  document.addEventListener('pointerdown',firstGesture,true);document.addEventListener('keydown',firstGesture,true);
+  document.addEventListener('visibilitychange',()=>{
+    if(document.hidden){if(playing){clearInterval(timer);if(ctx)ctx.suspend()}}
+    else if(playing&&ctx){ctx.resume();nextT=ctx.currentTime+.1;timer=setInterval(tick,40)}
+  });
+  ui();
+  if(wantOn)setTimeout(()=>!started&&toast('Tap di mana saja buat nyalain musik semangat 🎵'),1800);
+})();
 
 </script>
 </body>
